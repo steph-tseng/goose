@@ -15,8 +15,8 @@ const TopicCard = ({ topic, clickTopic }) => {
     >
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body style={{ borderRadius: "10px" }}>
-        <Card.Title>Topic Title</Card.Title>
-        <Card.Text>Some text to briefly introduce the topic</Card.Text>
+        <Card.Title>{topic.title}</Card.Title>
+        <Card.Text>{topic.description}</Card.Text>
         {/* <Button variant="info">See projects</Button> */}
       </Card.Body>
     </Card>

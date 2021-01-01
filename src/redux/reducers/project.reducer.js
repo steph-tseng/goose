@@ -1,37 +1,37 @@
-import * as types from "../constants/blog.constants";
+import * as types from "../constants/project.constants";
 const initialState = {
-  blogs: [],
+  projects: [],
   totalPageNum: 1,
-  selectedBlog: null,
+  selectedProject: null,
   loading: false,
   submitLoading: false,
 };
 
-const blogReducer = (state = initialState, action) => {
+const projectReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case types.GET_BLOGS_REQUEST:
+    case types.GET_PROJECTS_REQUEST:
       return { ...state, loading: true };
-    case types.GET_BLOGS_SUCCESS:
+    case types.GET_PROJECTS_SUCCESS:
       return {
         ...state,
-        blogs: payload.blogs,
+        projects: payload.projects,
         totalPageNum: payload.totalPages,
         loading: false,
       };
-    case types.GET_BLOGS_FAILURE:
+    case types.GET_PROJECTS_FAILURE:
       return { ...state, loading: false };
 
-    case types.GET_SELECTED_BLOG_REQUEST:
+    case types.GET_SELECTED_PROJECT_REQUEST:
       return { ...state, loading: true };
-    case types.GET_SELECTED_BLOG_SUCCESS:
+    case types.GET_SELECTED_PROJECT_SUCCESS:
       return {
         ...state,
-        selectedBlog: payload,
+        selectedProject: payload,
         loading: false,
       };
-    case types.GET_SELECTED_BLOG_FAILURE:
+    case types.GET_SELECTED_PROJECT_FAILURE:
       return { ...state, loading: false };
 
     case types.SEND_REACTION_REQUEST:
@@ -40,27 +40,27 @@ const blogReducer = (state = initialState, action) => {
     case types.CREATE_REVIEW_SUCCESS:
       return {
         ...state,
-        selectedBlog: {
-          ...state.selectedBlog,
-          reviews: [...state.selectedBlog.reviews, payload],
+        selectedProject: {
+          ...state.selectedProject,
+          reviews: [...state.selectedProject.reviews, payload],
         },
         submitLoading: false,
       };
 
-    case types.BLOG_REACTION_SUCCESS:
+    case types.PROJECT_REACTION_SUCCESS:
       return {
         ...state,
-        selectedBlog: { ...state.selectedBlog, reactions: payload },
+        selectedProject: { ...state.selectedProject, reactions: payload },
         submitLoading: false,
       };
 
     case types.REVIEW_REACTION_SUCCESS:
       return {
         ...state,
-        selectedBlog: {
-          ...state.selectedBlog,
+        selectedProject: {
+          ...state.selectedProject,
           reviews: [
-            ...state.selectedBlog.reviews.map((review) => {
+            ...state.selectedProject.reviews.map((review) => {
               if (review._id !== payload.reviewId) return review;
               return { ...review, reactions: payload.reactions };
             }),
@@ -73,29 +73,29 @@ const blogReducer = (state = initialState, action) => {
     case types.CREATE_REVIEW_FAILURE:
       return { ...state, submitLoading: false };
 
-    case types.CREATE_BLOG_REQUEST:
-    case types.UPDATE_BLOG_REQUEST:
-    case types.DELETE_BLOG_REQUEST:
+    case types.CREATE_PROJECT_REQUEST:
+    case types.UPDATE_PROJECT_REQUEST:
+    case types.DELETE_PROJECT_REQUEST:
       return { ...state, loading: true };
 
-    case types.CREATE_BLOG_SUCCESS:
+    case types.CREATE_PROJECT_SUCCESS:
       return { ...state, loading: false };
-    case types.UPDATE_BLOG_SUCCESS:
+    case types.UPDATE_PROJECT_SUCCESS:
       return {
         ...state,
-        selectedBlog: payload,
+        selectedProject: payload,
         loading: false,
       };
-    case types.DELETE_BLOG_SUCCESS:
+    case types.DELETE_PROJECT_SUCCESS:
       return {
         ...state,
         loading: false,
-        selectedBlog: {},
+        selectedProject: {},
       };
 
-    case types.CREATE_BLOG_FAILURE:
-    case types.UPDATE_BLOG_FAILURE:
-    case types.DELETE_BLOG_FAILURE:
+    case types.CREATE_PROJECT_FAILURE:
+    case types.UPDATE_PROJECT_FAILURE:
+    case types.DELETE_PROJECT_FAILURE:
       return { ...state, loading: false };
 
     default:
@@ -103,4 +103,4 @@ const blogReducer = (state = initialState, action) => {
   }
 };
 
-export default blogReducer;
+export default projectReducer;

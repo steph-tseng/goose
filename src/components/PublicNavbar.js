@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import logo from "../images/cangoose.png";
+// import logo from "../images/cangoose.png";
 import gooseLogo from "../images/gooseicon.png";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +19,7 @@ const PublicNavbar = () => {
   const authLinks = (
     <Nav>
       <Nav.Link as={Link} to="/admin/profile">
-        <FontAwesomeIcon icon="chart-line" size="sm" /> Admin
+        <FontAwesomeIcon icon="chart-line" size="sm" /> Profile
       </Nav.Link>
       <Nav.Link onClick={handleLogout}>
         <FontAwesomeIcon icon="sign-out-alt" size="sm" /> Logout
@@ -41,12 +41,13 @@ const PublicNavbar = () => {
   return (
     <Navbar
       expand="lg"
-      variant="dark"
+      variant="light"
       fixed="top"
       style={{
         fontFamily: "Langar",
-        backgroundColor: "rgba(255, 255, 255, 0.3)",
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
         position: "fixed",
+        fontSize: "20px",
         top: 0,
         right: 0,
         left: 0,
@@ -55,7 +56,7 @@ const PublicNavbar = () => {
     >
       <Nav className="d-flex flex-row justify-content-start mr-auto navbar-dark">
         <Navbar.Brand as={Link} to="/" className="">
-          <img src={logo} alt="Gooes" height="30px" />
+          <img src={gooseLogo} alt="Gooes" height="30px" />
         </Navbar.Brand>
         <Nav.Link as={Link} to="/" className="ml-3 mr-2">
           Topics

@@ -1,24 +1,18 @@
-html,
-body,
-.glass-effect {
-  width: 100%;
-  height: 100%;
-  /* overflow: hidden; */
-}
-
 body {
-  background-image: url(https://cdn.hipwallpaper.com/i/56/8/iJpasU.jpg);
+  background-image: url(https://4.bp.blogspot.com/-uBDzPvlXu1I/UzLFIl70acI/AAAAAAAABHw/SNBp1LXVTkQ/s1600/2-23-14.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: top;
+  /* background-blend-mode: luminosity; */
+  /* background-color: #148; */
 }
 
 .card-body:hover {
   background-color: lightgrey;
-  -webkit-transition: background-color 500ms linear;
-  -ms-transition: background-color 500ms linear;
-  transition: background-color 500ms linear;
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
 }
 
 .tags {
@@ -27,10 +21,14 @@ body {
 }
 
 .glass-effect {
-  backdrop-filter: blur(15px);
+  position: absolute;
+  backdrop-filter: blur(3px);
+  border: 1px solid #fff;
+  box-shadow: 2px 2px 4px #1b1e21;
+  border-radius: 10px;
 }
 
-.glass-effect::before {
+/* .glass-effect::before {
   content: "";
   display: block;
   width: 100%;
@@ -49,9 +47,13 @@ body {
   bottom: 0;
   box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.05);
   filter: blur(10px);
-}
+} */
 
 .box-shadow {
   box-shadow: 2px 2px 4px #1b1e21;
   border-radius: 10px;
+}
+
+.backColor {
+  color: #7c83a0;
 }

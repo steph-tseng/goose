@@ -19,7 +19,8 @@ const SearchForm = ({
             style={{
               boxShadow: "2px 2px 4px #1b1e21",
               borderRadius: "10px",
-              backgroundColor: "#fff",
+              opacity: 0.6,
+              // backgroundColor: "#fff",
             }}
           />
         </Col>
@@ -34,7 +35,7 @@ const SearchForm = ({
           </Button>
         ) : (
           <Button
-            variant="info"
+            variant="outline-light"
             type="submit"
             style={{
               boxShadow: "2px 2px 4px #1b1e21",

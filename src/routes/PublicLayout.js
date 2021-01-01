@@ -1,32 +1,34 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 import { Switch, Route } from "react-router-dom";
-import AlertMsg from "../components/AlertMsg";
 import NotFoundPage from "../pages/NotFoundPage";
 import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
-import PublicNavbar from "../components/PublicNavbar";
-import RegisterPage from "../pages/RegisterPage";
 import TopicPage from "../pages/TopicPage";
 import TextEditorPage from "../pages/TextEditorPage";
 import ProjectPage from "../pages/ProjectPage";
+import PublicNavbar from "../components/PublicNavbar";
+import PrivateRoute from "./PrivateRoute";
+import AddEditTopicPage from "../pages/AddEditTopicPage";
+import AddEditProjectPage from "../pages/AddEditProjectPage";
+import ProjectListPage from "../pages/ProjectListPage";
+
+// import PublicNavbar from "../components/PublicNavbar";
+// import LoginPage from "../pages/LoginPage";
+// import RegisterPage from "../pages/RegisterPage";
 
 const PublicLayout = () => {
   return (
     <>
       <PublicNavbar />
-      <Container>
-        <AlertMsg />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/topics/:topicId" component={TopicPage} />
-          <Route exact path="/topics/:id/:projectId" component={ProjectPage} />
-          <Route path="/edit" component={TextEditorPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </Container>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/topics/:topicId" component={TopicPage} />
+        <Route exact path="/topics/:id/:projectId" component={ProjectPage} />
+        <Route exact path="/projects" component={ProjectListPage} />
+        <PrivateRoute path="/evil" component={TextEditorPage} />
+        <PrivateRoute path="/edittopic" component={AddEditTopicPage} />
+        <PrivateRoute path="/editproject" component={AddEditProjectPage} />
+        <Route component={NotFoundPage} />
+      </Switch>
     </>
   );
 };

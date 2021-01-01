@@ -7,13 +7,6 @@ import authActions from "../redux/actions/auth.actions";
 import routeActions from "../redux/actions/route.actions";
 
 const LoginPage = () => {
-  // UI stuff
-
-  // eslint-disable-next-line no-restricted-globals
-  window.addEventListener(scroll, function noScroll() {
-    window.scrollTo(0, 0);
-  });
-
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
