@@ -54,7 +54,8 @@ const ReviewForm = ({
         <Button
           variant="contained"
           className={classes.btn}
-          // disabled={!reviewText}
+          disabled={!reviewText}
+          onClick={handleSubmitReview}
         >
           Submit
         </Button>
