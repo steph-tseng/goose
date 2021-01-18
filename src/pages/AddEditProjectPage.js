@@ -146,16 +146,11 @@ const AddEditProjectPage = () => {
   const redirectTo = useSelector((state) => state.route.redirectTo);
   const topics = useSelector((state) => state.topic.topics);
   const project = useSelector((state) => state.project.selectedProject);
-  console.log("project", project);
+  // console.log("project", project);
 
   const addOrEdit = project === null ? "Add" : "Edit";
   useEffect(() => {
     if (addOrEdit === "Edit") {
-      // if (!project) {
-      //   const projectID = project._id;
-      //   dispatch(projectActions.getSelctedProject(projectID));
-      //   console.log(project);
-      // }
       setFormData((formData) => ({
         ...formData,
         title: project.title,

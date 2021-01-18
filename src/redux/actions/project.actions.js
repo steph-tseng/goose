@@ -11,6 +11,9 @@ const projectsRequest = (pagenum, query, searchBy = "topic") => async (
     // TODO
     const res = await api.get(`projects?page=${pagenum}`);
     if (searchBy && query) {
+      // const res = await api.get(
+      //   `/projects?page=${pagenum}&limit=10&${searchBy}[$regex]=${query}&${searchBy}[$options]=i`
+      // );
       const res = await api.get(
         `/projects?page=${pagenum}&limit=10&${searchBy}[$regex]=${query}&${searchBy}[$options]=i`
       );
@@ -126,6 +129,41 @@ const deleteProject = (projectId, redirectTo = "__GO_BACK__") => async (
   }
 };
 
+const createReview = (reviewText, projectId) => async (dispatch) => {
+  dispatch({ type: types.CREATE_REVIEW_REQUEST, payload: null });
+  try {
+    const res = await api.post(`reviews/projects/${projectId}`, {
+      content: reviewText,
+    });
+    dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res.data.data });
+  } catch (error) {
+    dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: null });
+    toast.error(error);
+  }
+};
+
+const postEmoji = (targetType, targetId, emoji) => async (dispatch) => {
+  dispatch({ type: types.SEND_REACTION_REQUEST, payload: null });
+  try {
+    const res = await api.post(`reactions`, { targetType, targetId, emoji });
+    if (targetType === "Project") {
+      dispatch({
+        type: types.PROJECT_REACTION_SUCCESS,
+        payload: res.data.data,
+      });
+    }
+    if (targetType === "Review") {
+      dispatch({
+        type: types.REVIEW_REACTION_SUCCESS,
+        payload: { reactions: res.data.data, reviewId: targetId },
+      });
+    }
+  } catch (error) {
+    dispatch({ type: types.SEND_REACTION_FAILURE, payload: error });
+    toast.error(error);
+  }
+};
+
 const projectActions = {
   projectsRequest,
   getSelctedProject,
@@ -133,5 +171,7 @@ const projectActions = {
   updateProject,
   cancelSelected,
   deleteProject,
+  createReview,
+  postEmoji,
 };
 export default projectActions;

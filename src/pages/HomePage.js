@@ -3,14 +3,12 @@ import { Button, ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import SearchForm from "../components/SearchForm";
-import TopicCard from "../components/TopicCard";
 import topicActions from "../redux/actions/topic.actions";
 import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import TopicCard2 from "../components/TopicCard2";
-import HoverCard from "../components/HoverCard";
-import { Grid, GridList } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import projectActions from "../redux/actions/project.actions";
 
 const useStyles = makeStyles((theme) => ({

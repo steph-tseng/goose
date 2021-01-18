@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
@@ -6,6 +6,9 @@ import ReactMarkdown from "react-markdown";
 import projectActions from "../redux/actions/project.actions";
 import { Divider, IconButton } from "@material-ui/core";
 import { Chat, Delete, Edit } from "@material-ui/icons";
+import ReviewForm from "../components/ReviewForm";
+// import ReactionList from "../components/ReactionList";
+import ReactionMaterial from "../components/ReactionMaterial";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,15 +44,38 @@ const ProjectPage = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const projectId = params.projectId;
   const project = useSelector((state) => state.project.selectedProject);
-  console.log(project);
+  const submitLoading = useSelector((state) => state.project.submitLoading);
+  // console.log(project);
+  const [reviewText, setReviewText] = useState("");
+  const [showComments, setShowComments] = useState(false);
+  const handleShowComments = () => {
+    if (showComments === false) {
+      setShowComments(true);
+    } else {
+      setShowComments(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(projectActions.getSelctedProject(projectId));
   }, [dispatch, projectId]);
 
+  const handleInputChange = (e) => {
+    setReviewText(e.target.value);
+  };
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    dispatch(projectActions.createReview(projectId, reviewText));
+    setReviewText("");
+  };
+
   const handleDelete = () => {
     dispatch(projectActions.deleteProject(projectId));
     history.goBack();
+  };
+
+  const handleEmojiClick = (targetType, targetId, emoji) => {
+    dispatch(projectActions.postEmoji(targetType, targetId, emoji));
   };
 
   return (
@@ -68,7 +94,7 @@ const ProjectPage = () => {
             <Divider />
             <div className={classes.btnGroup}>
               <hr />
-              <IconButton aria-label="edit">
+              <IconButton aria-label="comment" onClick={handleShowComments}>
                 <Chat />
               </IconButton>
               <IconButton aria-label="delete" onClick={handleDelete}>
@@ -84,6 +110,37 @@ const ProjectPage = () => {
           </>
         )}
       </div>
+      {showComments === true && (
+        <div className={classes.textBox}>
+          <ReactionMaterial
+            reactionsData={project.reactions}
+            targetType="Project"
+            targetId={project._id}
+            handleEmojiClick={handleEmojiClick}
+            loading={submitLoading}
+          />
+
+          {/* <ReactionList
+            reactionsData={project.reactions}
+            targetType="Project"
+            targetId={project._id}
+            handleEmojiClick={handleEmojiClick}
+            loading={submitLoading}
+            size="sm"
+          /> */}
+          <h5 id="commentsSection" className="text-left">
+            Comments:
+          </h5>
+          {isAuthenticated && (
+            <ReviewForm
+              reviewText={reviewText}
+              handleInputChange={handleInputChange}
+              handleSubmitReview={handleSubmitReview}
+              loading={submitLoading}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };

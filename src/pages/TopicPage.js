@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import topicActions from "../redux/actions/topic.actions";
 import IconButton from "@material-ui/core/IconButton";
-import { Add, Chat, Delete, Edit } from "@material-ui/icons";
+import { Add, Delete, Edit } from "@material-ui/icons";
 import { Avatar, Button, Divider } from "@material-ui/core";
 import projectActions from "../redux/actions/project.actions";
 import Pagination from "@material-ui/lab/Pagination";
@@ -18,6 +18,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     padding: "4rem",
   },
+  btn: {
+    "& .MuiPaginationItem-outlined": {
+      border: "1px solid #fff",
+      borderRadius: "10px",
+      color: "#fff",
+      boxShadow: "2px 2px 4px #1b1e21",
+      // marginBottom: theme.spacing(1),
+    },
+    "& .Mui-selected": {
+      backgroundColor: "rgba(255, 255, 255, 0.2)",
+    },
+  },
   textBox: {
     // height: "18vh",
     width: "80vw",
@@ -26,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
     boxShadow: "2px 2px 4px #1b1e21",
     borderRadius: "10px",
-    marginBottom: "5vh",
+    marginBottom: "3vh",
     padding: theme.spacing(2),
+    marginLeft: theme.spacing(8),
   },
   btnGroup: {
     display: "flex",
@@ -60,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   avatar: {
+    marginLeft: theme.spacing(2),
     marginRight: theme.spacing(1),
     width: theme.spacing(7),
     height: theme.spacing(7),
@@ -112,9 +126,9 @@ const TopicPage = () => {
             <Divider />
             <div className={classes.btnGroup}>
               <hr />
-              <IconButton aria-label="edit">
+              {/* <IconButton aria-label="edit">
                 <Chat />
-              </IconButton>
+              </IconButton> */}
               <IconButton aria-label="delete" onClick={handleDelete}>
                 <Delete />
               </IconButton>
@@ -182,7 +196,7 @@ const TopicPage = () => {
             variant="outlined"
             onChange={handlePageChange}
             shape="rounded"
-            classes={{ root: classes.root }}
+            classes={{ root: classes.btn }}
             size="large"
           />
         </div>

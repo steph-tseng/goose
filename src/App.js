@@ -21,12 +21,19 @@ import {
   faListUl,
   faLink,
   faList,
+  faAngry,
+  faLaugh,
+  faSadCry,
+  faThumbsUp,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
 import authActions from "./redux/actions/auth.actions";
 import NotFoundPage from "./pages/NotFoundPage";
+import MessengerCustomerChat from "react-messenger-customer-chat";
+
 library.add(
   faUser,
   faRegistered,
@@ -40,7 +47,12 @@ library.add(
   faItalic,
   faListUl,
   faList,
-  faLink
+  faLink,
+  faAngry,
+  faLaugh,
+  faSadCry,
+  faThumbsUp,
+  faHeart
 );
 
 const App = () => {
@@ -69,6 +81,10 @@ const App = () => {
           </Switch>
         </Router>
       )}
+      <MessengerCustomerChat
+        pageId="m.me/goosethefaketumblr"
+        appId="244178857089279"
+      />
     </>
   );
 };
