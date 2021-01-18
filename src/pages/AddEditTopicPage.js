@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import Markdown from "markdown-to-jsx";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -11,12 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import topicActions from "../redux/actions/topic.actions";
 import routeActions from "../redux/actions/route.actions";
 // import clsx from "clsx";
-
-const styles = (theme) => ({
-  listItem: {
-    marginTop: theme.spacing(1),
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,36 +52,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const options = {
-  overrides: {
-    h1: {
-      component: Typography,
-      props: {
-        gutterBottom: true,
-        variant: "h5",
-      },
-    },
-    h2: { component: Typography, props: { gutterBottom: true, variant: "h6" } },
-    h3: {
-      component: Typography,
-      props: { gutterBottom: true, variant: "subtitle1" },
-    },
-    h4: {
-      component: Typography,
-      props: { gutterBottom: true, variant: "caption", paragraph: true },
-    },
-    p: { component: Typography, props: { paragraph: true } },
-    a: { component: Link },
-    li: {
-      component: withStyles(styles)(({ classes, ...props }) => (
-        <li className={classes.listItem}>
-          <Typography component="span" {...props} />
-        </li>
-      )),
-    },
-  },
-};
-
 const AddEditTopicPage = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -99,6 +61,18 @@ const AddEditTopicPage = () => {
     description: "",
   });
   const redirectTo = useSelector((state) => state.route.redirectTo);
+  const topic = useSelector((state) => state.topic.selectedTopic);
+  const addOrEdit = topic === null ? "Add" : "Edit";
+
+  useEffect(() => {
+    if (addOrEdit === "Edit") {
+      setFormData((formData) => ({
+        ...formData,
+        title: topic.title,
+        description: topic.description,
+      }));
+    }
+  }, [topic, dispatch, addOrEdit]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -107,7 +81,12 @@ const AddEditTopicPage = () => {
   const handleSubmitTopic = (e) => {
     e.preventDefault();
     const { title, description } = formData;
-    dispatch(topicActions.createNewTopic(title, description));
+    if (addOrEdit === "Add") {
+      dispatch(topicActions.createNewTopic(title, description));
+    } else {
+      const topicId = topic._id;
+      dispatch(topicActions.updateTopic(topicId, formData));
+    }
   };
 
   useEffect(() => {
@@ -122,10 +101,15 @@ const AddEditTopicPage = () => {
     }
   }, [redirectTo, dispatch, history]);
 
+  const handleCancelBtn = () => {
+    dispatch(topicActions.cancelSelected());
+    history.goBack();
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.main}>
-        <h2>New Topic</h2>
+        <h2>{addOrEdit === "Edit" ? "Update Topic" : "New Topic"}</h2>
         {/* <Markdown children={content} options={options} /> */}
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
@@ -160,12 +144,12 @@ const AddEditTopicPage = () => {
             className={classes.btn}
             onClick={handleSubmitTopic}
           >
-            Submit
+            {addOrEdit === "Edit" ? "Update" : "Submit"}
           </Button>
           <Button
             variant="outlined"
             className={classes.btnPadding}
-            onClick={() => history.goBack()}
+            onClick={handleCancelBtn}
           >
             Cancel
           </Button>

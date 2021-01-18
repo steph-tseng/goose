@@ -1,23 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import projectActions from "../redux/actions/project.actions";
 import ReactMarkdown from "react-markdown";
+import Pagination from "@material-ui/lab/Pagination";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: { marginTop: "5rem", display: "flex", flexDirection: "column" },
+  root: {
+    // marginTop: "5rem",
+    display: "flex",
+    flexDirection: "column",
+    "& .MuiPaginationItem-outlined": {
+      border: "1px solid #fff",
+      borderRadius: "10px",
+      color: "#fff",
+      boxShadow: "2px 2px 4px #1b1e21",
+      marginBottom: theme.spacing(1),
+      marginTop: theme.spacing(5),
+    },
+
+    "& .Mui-selected": {
+      backgroundColor: "rgba(255, 255, 255, 0.2)",
+    },
+    textAlign: "center",
+    alignContent: "center",
+  },
   main: {
     height: "80px",
-    width: "90vw",
+    width: "80vw",
     backgroundColor: "#fff",
     alignContent: "center",
     textAlign: "center",
     boxShadow: "2px 2px 4px #1b1e21",
     borderRadius: "10px",
-    marginLeft: "4rem",
-    marginRight: "4rem",
+    marginLeft: theme.spacing(16),
+    marginRight: theme.spacing(16),
+    position: "relative",
+    backgroundImage:
+      "url(https://live.staticflickr.com/65535/50808353838_213a594c7d_b.jpg)",
+    backgroundRepeat: "repeat",
+    backgroundSize: "200px",
+    color: "#fff",
+    fontFamily: "langar",
+    fontWeight: "5",
+    "&:after": {
+      zIndex: 5,
+      backgroundColor: "#fff",
+    },
   },
   list: {
     listStyle: "none",
@@ -33,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   project: {
-    width: "83vw",
+    width: "74vw",
     backgroundColor: "#fff",
     alignContent: "center",
     textAlign: "left",
@@ -41,8 +73,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   avatar: {
+    marginLeft: theme.spacing(8),
     marginRight: theme.spacing(1),
     width: theme.spacing(7),
     height: theme.spacing(7),
@@ -54,13 +88,19 @@ const ProjectPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const projects = useSelector((state) => state.project.projects);
+  const totalPageNum = useSelector((state) => state.project.totalPageNum);
+  const [pageNum, setPageNum] = useState(1);
+
+  const handlePageChange = (event, value) => {
+    setPageNum(value);
+  };
 
   useEffect(() => {
-    dispatch(projectActions.projectsRequest());
-  }, [dispatch]);
+    dispatch(projectActions.projectsRequest(pageNum));
+  }, [dispatch, pageNum]);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ marginTop: "5rem" }}>
       <div className={classes.main}>
         <h1 className="pt-2 mt-1">All Projects</h1>
       </div>
@@ -83,18 +123,36 @@ const ProjectPage = () => {
                 className={classes.avatar}
               />
               <div className={classes.project}>
-                <small>{project.author.name}</small>
+                <small>@{project.author.name}</small>{" "}
+                <Button variant="text" color="primary">
+                  Follow
+                </Button>
                 <hr />
-                <h2>{project.title}</h2>
-
+                <h3>{project.title}</h3>
                 <ReactMarkdown allowDangerousHtml>
                   {project.content}
                 </ReactMarkdown>
+                {project.tags
+                  ? project.tags.map((tag) => <small>#{tag} </small>)
+                  : ""}
               </div>
             </li>
           );
         })}
       </ul>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "2vh" }}
+      >
+        <Pagination
+          count={totalPageNum}
+          page={pageNum}
+          variant="outlined"
+          onChange={handlePageChange}
+          shape="rounded"
+          classes={{ root: classes.root }}
+          size="large"
+        />
+      </div>
     </div>
   );
 };

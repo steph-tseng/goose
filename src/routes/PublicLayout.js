@@ -22,7 +22,7 @@ const PublicLayout = () => {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/topics/:topicId" component={TopicPage} />
-        <Route exact path="/topics/:id/:projectId" component={ProjectPage} />
+        <Route exact path="/projects/:projectId" component={ProjectPage} />
         <Route exact path="/projects" component={ProjectListPage} />
         <PrivateRoute path="/evil" component={TextEditorPage} />
         <PrivateRoute path="/edittopic" component={AddEditTopicPage} />

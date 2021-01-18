@@ -26,6 +26,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
 import authActions from "./redux/actions/auth.actions";
+import NotFoundPage from "./pages/NotFoundPage";
 library.add(
   faUser,
   faRegistered,
@@ -62,8 +63,9 @@ const App = () => {
           <Switch>
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/register" component={RegisterPage} />
-            <Route path="/" component={PublicLayout} />
             <PrivateRoute path="/admin" component={AdminLayout} />
+            <Route path="/" component={PublicLayout} />
+            <Route component={NotFoundPage} />
           </Switch>
         </Router>
       )}

@@ -41,11 +41,12 @@ const PublicNavbar = () => {
   return (
     <Navbar
       expand="lg"
-      variant="light"
+      variant="dark"
       fixed="top"
       style={{
+        minHeight: "64px",
         fontFamily: "Langar",
-        backgroundColor: "rgba(255, 255, 255, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
         position: "fixed",
         fontSize: "20px",
         top: 0,

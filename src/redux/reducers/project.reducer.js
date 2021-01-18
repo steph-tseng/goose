@@ -47,6 +47,9 @@ const projectReducer = (state = initialState, action) => {
         submitLoading: false,
       };
 
+    case types.CANCEL_SELECTED_PROJECT:
+      return { ...state, selectedProject: null };
+
     case types.PROJECT_REACTION_SUCCESS:
       return {
         ...state,
@@ -83,7 +86,7 @@ const projectReducer = (state = initialState, action) => {
     case types.UPDATE_PROJECT_SUCCESS:
       return {
         ...state,
-        selectedProject: payload,
+        selectedProject: null,
         loading: false,
       };
     case types.DELETE_PROJECT_SUCCESS:

@@ -3,11 +3,19 @@ import api from "../../apiService";
 import { toast } from "react-toastify";
 import routeActions from "./route.actions";
 
-const projectsRequest = () => async (dispatch) => {
+const projectsRequest = (pagenum, query, searchBy = "topic") => async (
+  dispatch
+) => {
   dispatch({ type: types.GET_PROJECTS_REQUEST, payload: null });
   try {
     // TODO
-    const res = await api.get(`projects`);
+    const res = await api.get(`projects?page=${pagenum}`);
+    if (searchBy && query) {
+      const res = await api.get(
+        `/projects?page=${pagenum}&limit=10&${searchBy}[$regex]=${query}&${searchBy}[$options]=i`
+      );
+      dispatch({ type: types.GET_PROJECTS_SUCCESS, payload: res.data.data });
+    }
     dispatch({ type: types.GET_PROJECTS_SUCCESS, payload: res.data.data });
   } catch (error) {
     dispatch({ type: types.GET_PROJECTS_FAILURE, payload: null });
@@ -35,10 +43,10 @@ const projectsRequest = () => async (dispatch) => {
 //   }
 // };
 
-const getSelctedProject = (topicId, projectId) => async (dispatch) => {
+const getSelctedProject = (projectId) => async (dispatch) => {
   dispatch({ type: types.GET_SELECTED_PROJECT_REQUEST, payload: null });
   try {
-    const res = await api.get(`/${topicId}/${projectId}`);
+    const res = await api.get(`projects/${projectId}`);
     dispatch({
       type: types.GET_SELECTED_PROJECT_SUCCESS,
       payload: res.data.data,
@@ -50,15 +58,17 @@ const getSelctedProject = (topicId, projectId) => async (dispatch) => {
   }
 };
 
-const createNewProject = (
+const createNewProject = ({
   title,
   content,
+  topicId,
   tags,
-  redirectTo = "__GO_BACK__"
-) => async (dispatch) => {
+  redirectTo = "__GO_BACK__",
+}) => async (dispatch) => {
   dispatch({ type: types.CREATE_PROJECT_REQUEST, payload: null });
   try {
-    const res = await api.post(`projects`, { title, content, tags });
+    console.log("====", topicId);
+    const res = await api.post(`projects`, { title, content, topicId, tags });
     dispatch({
       type: types.CREATE_PROJECT_SUCCESS,
       payload: res.data.data,
@@ -72,19 +82,17 @@ const createNewProject = (
 };
 
 const updateProject = (
-  topicId,
-  title,
-  content,
-  images,
   projectId,
-  redirectTo = "__GO_BACK__"
+  { title, content, topicId, tags, redirectTo = "__GO_BACK__" }
 ) => async (dispatch) => {
+  console.log("ooooo", projectId);
   dispatch({ type: types.CREATE_PROJECT_REQUEST, payload: null });
   try {
-    const res = api.put(`${topicId}/${projectId}`, {
+    const res = api.put(`projects/${projectId}`, {
       title,
       content,
-      images,
+      topicId,
+      tags,
     });
     dispatch({ type: types.CREATE_PROJECT_SUCCESS, payload: res.data.data });
     dispatch(routeActions.redirect(redirectTo));
@@ -95,19 +103,22 @@ const updateProject = (
   }
 };
 
-const deleteProject = (
-  topicId,
-  projectId,
-  redirectTo = "__GO_BACK__"
-) => async (dispatch) => {
+const cancelSelected = () => async (dispatch) => {
+  dispatch({ type: types.CANCEL_SELECTED_PROJECT, payload: null });
+};
+
+const deleteProject = (projectId, redirectTo = "__GO_BACK__") => async (
+  dispatch
+) => {
   dispatch({ type: types.DELETE_PROJECT_REQUEST, payload: null });
   try {
-    const res = await api.delete(`${topicId}/${projectId}`);
+    const res = await api.delete(`projects/${projectId}`);
     dispatch({
       type: types.DELETE_PROJECT_SUCCESS,
       payload: res.data,
     });
     dispatch(routeActions.redirect(redirectTo));
+    dispatch(projectActions.projectsRequest(1));
     toast.success("The project has been deleted!");
   } catch (error) {
     console.log(error);
@@ -120,6 +131,7 @@ const projectActions = {
   getSelctedProject,
   createNewProject,
   updateProject,
+  cancelSelected,
   deleteProject,
 };
 export default projectActions;
