@@ -21,6 +21,8 @@ import { Link, Route, Switch, useHistory } from "react-router-dom";
 import ProfilePage from "../pages/Admin/ProfilePage";
 import { useDispatch } from "react-redux";
 import authActions from "../redux/actions/auth.actions";
+import ChatPage from "../pages/Admin/ChatPage";
+import UpdateProfilePage from "../pages/Admin/UpdateProfilePage";
 
 const drawerWidth = 240;
 
@@ -151,6 +153,7 @@ const AdminLayout = () => {
           </Typography>
           <Typography variant="h6" align="right">
             <Link
+              href="#"
               className={clsx(classes.link, classes.align)}
               onClick={handleLogout}
             >
@@ -179,7 +182,7 @@ const AdminLayout = () => {
         </div>
         <Divider />
         <List>
-          {["Profile", "Messages", "Friends", "Drafts"].map((text, index) => (
+          {["Profile", "Messages", "Following", "Drafts"].map((text, index) => (
             <ListItem
               button
               key={text}
@@ -200,7 +203,13 @@ const AdminLayout = () => {
       >
         <div className={classes.drawerHeader} />
         <Switch>
-          <Route exact path="/admin/profile" component={ProfilePage} />
+          <Route exact path="/admin/Profile" component={ProfilePage} />
+          <Route exact path="/admin/Messages" component={ChatPage} />
+          <Route
+            exact
+            path="/admin/Profile/edit"
+            component={UpdateProfilePage}
+          />
         </Switch>
       </main>
     </div>

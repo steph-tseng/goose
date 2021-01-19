@@ -86,7 +86,8 @@ const createNewProject = ({
 
 const updateProject = (
   projectId,
-  { title, content, topicId, tags, redirectTo = "__GO_BACK__" }
+  { title, content, topicId, tags },
+  redirectTo = "__GO_BACK__"
 ) => async (dispatch) => {
   console.log("ooooo", projectId);
   dispatch({ type: types.CREATE_PROJECT_REQUEST, payload: null });
@@ -129,7 +130,7 @@ const deleteProject = (projectId, redirectTo = "__GO_BACK__") => async (
   }
 };
 
-const createReview = (reviewText, projectId) => async (dispatch) => {
+const createReview = (projectId, reviewText) => async (dispatch) => {
   dispatch({ type: types.CREATE_REVIEW_REQUEST, payload: null });
   try {
     const res = await api.post(`reviews/projects/${projectId}`, {

@@ -164,7 +164,7 @@ const HomePage = () => {
             return (
               <Grid item onClick={() => clickTopic(topic._id)}>
                 {/* <TopicCard topic={topic} /> */}
-                <TopicCard2 topic={topic} />
+                <TopicCard2 topic={topic} key={topic._id} />
                 {/* <HoverCard topic={topic} /> */}
               </Grid>
             );

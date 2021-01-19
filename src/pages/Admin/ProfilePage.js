@@ -1,16 +1,16 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { useSelector } from "react-redux";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Button, makeStyles, Typography } from "@material-ui/core";
 import Image from "material-ui-image";
 import Moment from "react-moment";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(0),
     },
-    // margin: theme.spacing(2),
     marginTop: theme.spacing(2),
     display: "flex",
     justifyContent: "center",
@@ -24,22 +24,24 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "2px 2px 4px #1b1e21",
     display: "flex",
     flexDirection: "column",
-    // height: "70vh",
   },
   image: {
-    // justifySelf: "center",
-    // alignSelf: "center",
     margin: theme.spacing(0),
     justifyContent: "center",
-    // marginLeft: theme.spacing(7),
     padding: theme.spacing(0),
     marginBottom: theme.spacing(5),
+  },
+  button: {
+    color: "#fff",
+    backgroundColor: "#6a75a3",
+    "&:hover": { backgroundColor: "#8b97cc" },
   },
 }));
 
 const ProfilePage = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
+  const history = useHistory();
 
   const children = (
     <>
@@ -69,6 +71,13 @@ const ProfilePage = () => {
       <Typography variant="h6" gutterBottom align="center">
         User since: <Moment format="MM-DD-YYYY">{user.createdAt}</Moment>
       </Typography>
+      <Button
+        className={classes.button}
+        variant="contained"
+        onClick={() => history.push("/admin/Profile/edit")}
+      >
+        Edit
+      </Button>
     </>
   );
 
