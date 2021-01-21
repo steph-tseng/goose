@@ -12,6 +12,7 @@ const projectReducer = (state = initialState, action) => {
 
   switch (type) {
     case types.GET_PROJECTS_REQUEST:
+    case types.GET_REVIEW_REQUEST:
       return { ...state, loading: true };
     case types.GET_PROJECTS_SUCCESS:
       return {
@@ -21,6 +22,7 @@ const projectReducer = (state = initialState, action) => {
         loading: false,
       };
     case types.GET_PROJECTS_FAILURE:
+    case types.GET_REVIEW_FAILURE:
       return { ...state, loading: false };
 
     case types.GET_SELECTED_PROJECT_REQUEST:
@@ -45,6 +47,14 @@ const projectReducer = (state = initialState, action) => {
           reviews: [...state.selectedProject.reviews, payload],
         },
         submitLoading: false,
+      };
+    case types.GET_REVIEW_SUCCESS:
+      return {
+        ...state,
+        selectedProject: {
+          ...state.selectedProject,
+          reviews: [payload],
+        },
       };
 
     case types.CANCEL_SELECTED_PROJECT:

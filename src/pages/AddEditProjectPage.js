@@ -129,6 +129,10 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "10vw",
     paddingRight: "10vw",
   },
+  disabledButton: {
+    backgroundColor: "#99a2c7",
+    color: "#fff",
+  },
 }));
 
 const AddEditProjectPage = () => {
@@ -352,6 +356,8 @@ const AddEditProjectPage = () => {
               variant="outlined"
               className={classes.btn}
               onClick={handleSubmitProject}
+              disabled={!formData.textBox}
+              classes={{ disabled: classes.disabledButton }}
             >
               {addOrEdit === "Edit" ? "Update" : "Submit"}
             </Button>

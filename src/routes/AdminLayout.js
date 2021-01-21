@@ -23,6 +23,8 @@ import { useDispatch } from "react-redux";
 import authActions from "../redux/actions/auth.actions";
 import ChatPage from "../pages/Admin/ChatPage";
 import UpdateProfilePage from "../pages/Admin/UpdateProfilePage";
+import UserListPage from "../pages/Admin/UserListPage";
+import FollowingListPage from "../pages/Admin/FollowingListPage";
 
 const drawerWidth = 240;
 
@@ -182,11 +184,11 @@ const AdminLayout = () => {
         </div>
         <Divider />
         <List>
-          {["Profile", "Messages", "Following", "Drafts"].map((text, index) => (
+          {["Profile", "Messages", "Users", "Following"].map((text, index) => (
             <ListItem
               button
               key={text}
-              onClick={() => history.push(`/admin/${text}`)}
+              onClick={() => history.push(`/admin/${text.toLowerCase()}`)}
             >
               <ListItemIcon>
                 {index % 2 === 0 ? <AccountBoxIcon /> : <MessageIcon />}
@@ -203,13 +205,15 @@ const AdminLayout = () => {
       >
         <div className={classes.drawerHeader} />
         <Switch>
-          <Route exact path="/admin/Profile" component={ProfilePage} />
-          <Route exact path="/admin/Messages" component={ChatPage} />
+          <Route exact path="/admin/profile" component={ProfilePage} />
+          <Route exact path="/admin/messages" component={ChatPage} />
           <Route
             exact
-            path="/admin/Profile/edit"
+            path="/admin/profile/edit"
             component={UpdateProfilePage}
           />
+          <Route exact path="/admin/users" component={UserListPage} />
+          <Route exact path="/admin/following" component={FollowingListPage} />
         </Switch>
       </main>
     </div>

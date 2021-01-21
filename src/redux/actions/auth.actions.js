@@ -47,6 +47,7 @@ const getCurrentUser = (accessToken) => async (dispatch) => {
   }
   try {
     const res = await api.get("/users/me");
+    console.log("adfasasdf", res.data.data);
     dispatch({ type: types.GET_CURRENT_USER_SUCCESS, payload: res.data.data });
   } catch (error) {
     dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });

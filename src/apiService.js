@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_API + "/api",
-  // baseURL: "http://localhost:5000/api/",
+  // baseURL: process.env.REACT_APP_BACKEND_API + "/api",
+  baseURL: "http://localhost:5000/api/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -31,6 +31,7 @@ api.interceptors.response.use(
         "accessToken",
         "Bearer " + response.data.data.accessToken
       );
+      // console.log(response.data.data.accessToken);
     }
     return response;
   },

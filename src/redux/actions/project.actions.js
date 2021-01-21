@@ -137,9 +137,21 @@ const createReview = (projectId, reviewText) => async (dispatch) => {
       content: reviewText,
     });
     dispatch({ type: types.CREATE_REVIEW_SUCCESS, payload: res.data.data });
+    dispatch(projectActions.getReviews(projectId));
   } catch (error) {
     dispatch({ type: types.CREATE_REVIEW_FAILURE, payload: null });
     toast.error(error);
+  }
+};
+
+const getReviews = (projectId) => async (dispatch) => {
+  dispatch({ type: types.GET_REVIEW_REQUEST, payload: null });
+  try {
+    const res = await api.get(`reviews/projects/${projectId}`);
+    // console.log("pls", res.data.data);
+    dispatch({ type: types.GET_REVIEW_SUCCESS, payload: res.data.data });
+  } catch (error) {
+    dispatch({ type: types.GET_REVIEW_FAILURE, payload: null });
   }
 };
 
@@ -173,6 +185,7 @@ const projectActions = {
   cancelSelected,
   deleteProject,
   createReview,
+  getReviews,
   postEmoji,
 };
 export default projectActions;

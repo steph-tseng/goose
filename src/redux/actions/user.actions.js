@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import api from "../../apiService";
 import * as types from "../constants/user.constants";
 import routeActions from "./route.actions";
@@ -6,7 +7,7 @@ import routeActions from "./route.actions";
 const getCurrentUserInfo = (authToken) => async (dispatch) => {
   dispatch({ type: types.GET_CURRENT_USER_REQUEST, payload: null });
   try {
-    const res = api.get(`/users/me`, authToken);
+    const res = await api.get(`/users/me`, authToken);
     dispatch({ type: types.GET_CURRENT_USER_SUCCESS, payload: res.data.data });
     console.log("actions", res.data.data);
   } catch (error) {
@@ -47,13 +48,60 @@ const updateUserInfo = (authToken, name, password, avatarURL) => async (
 ) => {
   dispatch({ type: types.UPDATE_USER_REQUEST, payload: null });
   try {
-    const res = api.put(`/users/`, authToken, name, password, avatarURL);
+    const res = await api.put(`/users/`, authToken, name, password, avatarURL);
     dispatch({ type: types.UPDATE_USER_SUCCESS, payload: res.data.data });
+    dispatch(userActions.getCurrentUserInfo(authToken));
     dispatch(routeActions.redirect("/admin/Profile"));
   } catch (error) {
     dispatch({ type: types.UPDATE_USER_FAILURE, payload: null });
   }
 };
 
-const userActions = { getCurrentUserInfo, getUsers, updateUserInfo };
+const followRequest = (toUser) => async (dispatch) => {
+  dispatch({ type: types.START_FOLLOWING_REQUEST, payload: null });
+  try {
+    const res = await api.post(`/following/${toUser}`);
+    dispatch({ type: types.START_FOLLOWING_SUCCESS, payload: res.data.data });
+    dispatch(userActions.getListOfFollowing());
+    toast.success(`You are now following this user`);
+  } catch (error) {
+    dispatch({ type: types.START_FOLLOWING_FAILURE, payload: null });
+    toast.error(error.errors.message);
+  }
+};
+
+// const CheckIfFollowing = (toUser) => async (dispatch) => {};
+
+const getListOfFollowing = () => async (dispatch) => {
+  dispatch({ type: types.GET_FOLLOWING_REQUEST, payload: null });
+  try {
+    const res = await api.get(`/following`);
+
+    dispatch({ type: types.GET_FOLLOWING_SUCCESS, payload: res.data.data });
+  } catch (error) {
+    console.log("errrr", error);
+    dispatch({ type: types.GET_FOLLOWING_FAILURE, payload: null });
+  }
+};
+
+const unfollow = (toUser) => async (dispatch) => {
+  dispatch({ type: types.STOP_FOLLOWING_REQUEST, payload: null });
+  try {
+    const res = await api.delete(`/following/${toUser}`);
+    dispatch({ type: types.STOP_FOLLOWING_SUCCESS, payload: res.data.data });
+    dispatch(userActions.getListOfFollowing());
+    toast.success(`You have stopped following this user`);
+  } catch (error) {
+    dispatch({ type: types.STOP_FOLLOWING_FAILURE, payload: null });
+  }
+};
+
+const userActions = {
+  getCurrentUserInfo,
+  getUsers,
+  updateUserInfo,
+  followRequest,
+  getListOfFollowing,
+  unfollow,
+};
 export default userActions;

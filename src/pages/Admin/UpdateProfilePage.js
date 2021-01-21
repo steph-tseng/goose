@@ -40,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
     // height: "70vh",
   },
   image: {
-    // justifySelf: "center",
-    // alignSelf: "center",
     margin: theme.spacing(0),
     justifyContent: "center",
     // marginLeft: theme.spacing(7),
@@ -116,10 +114,10 @@ const UpdateProfilePage = () => {
           }
           alt={formData.name}
           // aspectRatio={1 / 1}
-          imageStyle={{
-            width: "100%",
-            height: "100%",
-          }}
+          // imageStyle={{
+          //   width: "100%",
+          //   height: "100%",
+          // }}
           style={{ borderRadius: "50%" }}
           className={classes.image}
         />

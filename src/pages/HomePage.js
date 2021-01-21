@@ -162,7 +162,7 @@ const HomePage = () => {
           {topics.map((topic) => {
             // console.log(topic);
             return (
-              <Grid item onClick={() => clickTopic(topic._id)}>
+              <Grid key={topic._id} item onClick={() => clickTopic(topic._id)}>
                 {/* <TopicCard topic={topic} /> */}
                 <TopicCard2 topic={topic} key={topic._id} />
                 {/* <HoverCard topic={topic} /> */}

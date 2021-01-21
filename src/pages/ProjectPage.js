@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import projectActions from "../redux/actions/project.actions";
-import { Divider, IconButton } from "@material-ui/core";
+import { Button, Divider, IconButton } from "@material-ui/core";
 import { Chat, Delete, Edit } from "@material-ui/icons";
 import ReviewForm from "../components/ReviewForm";
 // import ReactionList from "../components/ReactionList";
 import ReactionMaterial from "../components/ReactionMaterial";
+import userActions from "../redux/actions/user.actions";
+import ReviewList from "../components/ReviewList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +47,7 @@ const ProjectPage = () => {
   const projectId = params.projectId;
   const project = useSelector((state) => state.project.selectedProject);
   const submitLoading = useSelector((state) => state.project.submitLoading);
-  // console.log(project);
+  // console.log("project", project);
   const [reviewText, setReviewText] = useState("");
   const [showComments, setShowComments] = useState(false);
   const handleShowComments = () => {
@@ -55,9 +57,13 @@ const ProjectPage = () => {
       setShowComments(false);
     }
   };
+  const following = useSelector((state) => state.user.following).map(
+    (item) => item._id
+  );
 
   useEffect(() => {
     dispatch(projectActions.getSelctedProject(projectId));
+    dispatch(projectActions.getReviews(projectId));
   }, [dispatch, projectId]);
 
   const handleInputChange = (e) => {
@@ -78,10 +84,35 @@ const ProjectPage = () => {
     dispatch(projectActions.postEmoji(targetType, targetId, emoji));
   };
 
+  const startFollowing = (userId) => {
+    dispatch(userActions.followRequest(userId));
+  };
+
+  const handleUnfollow = (userId) => {
+    dispatch(userActions.unfollow(userId));
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.textBox}>
-        <p>{project?.author.name}</p>
+        <small>{project?.author?.name}</small>
+        {!following.includes(project?.author?._id) ? (
+          <Button
+            variant="text"
+            color="primary"
+            onClick={() => startFollowing(project.author._id)}
+          >
+            Follow
+          </Button>
+        ) : (
+          <Button
+            variant="text"
+            color="primary"
+            onClick={() => handleUnfollow(project.author._id)}
+          >
+            Unfollow
+          </Button>
+        )}
         <Divider />
         <h1 className=" mt-1">{project?.title}</h1>
         <ReactMarkdown allowDangerousHtml>{project?.content}</ReactMarkdown>
@@ -119,15 +150,6 @@ const ProjectPage = () => {
             handleEmojiClick={handleEmojiClick}
             loading={submitLoading}
           />
-
-          {/* <ReactionList
-            reactionsData={project.reactions}
-            targetType="Project"
-            targetId={project._id}
-            handleEmojiClick={handleEmojiClick}
-            loading={submitLoading}
-            size="sm"
-          /> */}
           <h5 id="commentsSection" className="text-left">
             Comments:
           </h5>
@@ -138,6 +160,16 @@ const ProjectPage = () => {
               handleSubmitReview={handleSubmitReview}
               loading={submitLoading}
             />
+          )}
+          {project?.reviews && (
+            <>
+              {/* {console.log("object", project.reviews)} */}
+              <ReviewList
+                reviews={project.reviews[0].reviews}
+                handleEmojiClick={handleEmojiClick}
+                loading={submitLoading}
+              />
+            </>
           )}
         </div>
       )}
