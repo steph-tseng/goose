@@ -86,7 +86,11 @@ const App = () => {
       {isAuthenticated !== null && (
         <>
           {loading ? (
-            <img src="https://i.imgur.com/LyTz4RO.gif" alt="Dancing goose" />
+            <img
+              src="https://i.imgur.com/LyTz4RO.gif"
+              alt="Dancing goose"
+              style={{ height: "100vh", width: "100vw" }}
+            />
           ) : (
             <Router>
               <AlertMsg />

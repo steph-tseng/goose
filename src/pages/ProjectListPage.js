@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     marginLeft: theme.spacing(16),
     marginRight: theme.spacing(16),
+
     position: "relative",
     backgroundImage:
       "url(https://live.staticflickr.com/65535/50808353838_213a594c7d_b.jpg)",
@@ -196,25 +197,33 @@ const ProjectPage = () => {
 
   return (
     <>
+      {isAuthenticated && (
+        <div
+          style={{
+            position: "sticky",
+            left: "90vw",
+            top: "85vh",
+          }}
+        >
+          <Tooltip title="Honk Chat">
+            <IconButton onClick={() => history.push("/admin/messages")}>
+              <img
+                src={honk}
+                alt="honk"
+                style={{ height: "80px", width: "80px" }}
+              />
+            </IconButton>
+          </Tooltip>
+        </div>
+      )}
       <div
-        style={{
-          position: "sticky",
-          left: "90vw",
-          top: "85vh",
-        }}
+        className={classes.root}
+        style={{ marginTop: isAuthenticated ? 0 : "5rem" }}
       >
-        <Tooltip title="Honk Chat">
-          <IconButton onClick={() => history.push("/admin/messages")}>
-            <img
-              src={honk}
-              alt="honk"
-              style={{ height: "80px", width: "80px" }}
-            />
-          </IconButton>
-        </Tooltip>
-      </div>
-      <div className={classes.root}>
-        <div className={classes.main}>
+        <div
+          className={classes.main}
+          style={{ paddingTop: isAuthenticated ? 0 : "1.5rem" }}
+        >
           <h1 className="pt-2 mt-1">All Projects</h1>
           {isAuthenticated === true && (
             <SplitButton

@@ -222,17 +222,23 @@ const HomePage = () => {
           zIndex: 1000,
         }}
       >
-        <Tooltip title="Honk Chat">
-          <IconButton onClick={() => handleHonk()}>
-            <img
-              src={honk}
-              alt="honk"
-              style={{ height: "80px", width: "80px" }}
-            />
-          </IconButton>
-        </Tooltip>
+        {isAuthenticated && (
+          <Tooltip title="Honk Chat">
+            <IconButton onClick={() => handleHonk()}>
+              <img
+                src={honk}
+                alt="honk"
+                style={{ height: "80px", width: "80px" }}
+              />
+            </IconButton>
+          </Tooltip>
+        )}
       </div>
-      <div className={classes.root}>
+
+      <div
+        className={classes.root}
+        style={{ marginTop: isAuthenticated ? 0 : "5rem" }}
+      >
         <Paper
           variant="outlined"
           elevation={24}
