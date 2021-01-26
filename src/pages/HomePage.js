@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     // marginLeft: theme.spacing(18),
     // marginRight: theme.spacing(12),
-    paddingLeft: theme.spacing(16),
+    paddingLeft: theme.spacing(14),
     paddingRight: theme.spacing(16),
   },
   divBtn: {
