@@ -94,8 +94,8 @@ const useStyles = makeStyles((theme) => ({
   card: {
     // marginLeft: theme.spacing(18),
     // marginRight: theme.spacing(12),
-    paddingLeft: theme.spacing(5),
-    paddingRight: theme.spacing(5),
+    paddingLeft: theme.spacing(16),
+    paddingRight: theme.spacing(16),
   },
   divBtn: {
     display: "flex",
