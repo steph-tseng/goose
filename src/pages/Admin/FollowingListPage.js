@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     marginRight: theme.spacing(2),
   },
+  h1: {
+    marginLeft: theme.spacing(4),
+  },
   h4: {
     marginTop: theme.spacing(1),
   },
@@ -38,6 +41,8 @@ const FollowingListPage = () => {
   return (
     <div>
       <Paper className={classes.paper}>
+        <h1 className={classes.h1}>List of users you are following</h1>
+        <hr />
         <ul className="">
           {following.length > 0 ? (
             following.map((user) => (

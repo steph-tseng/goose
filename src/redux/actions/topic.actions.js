@@ -16,13 +16,21 @@ import routeActions from "./route.actions";
 //     dispatch({ type: types.GET_TOPIC_FAILURE, payload: null });
 //   }
 // };
-const topicsRequest = (pagenum) => async (dispatch) => {
+const topicsRequest = (pagenum, searchBy, query) => async (dispatch) => {
   dispatch({ type: types.GET_TOPICS_REQUEST, payload: null });
   dispatch({ type: types.CANCEL_SELECTED_TOPIC, payload: null });
   try {
     // TODO
-    const res = await api.get(`topics?page=${pagenum}`);
-    dispatch({ type: types.GET_TOPICS_SUCCESS, payload: res.data.data });
+    console.log("query", searchBy, query);
+    if (query) {
+      const res = await api.get(
+        `topics?page=${pagenum}&limit=10&${searchBy}[$regex]=${query}&${searchBy}[$options]=i`
+      );
+      dispatch({ type: types.GET_TOPICS_SUCCESS, payload: res.data.data });
+    } else {
+      const res = await api.get(`topics?page=${pagenum}`);
+      dispatch({ type: types.GET_TOPICS_SUCCESS, payload: res.data.data });
+    }
 
     // console.log(res);
   } catch (error) {

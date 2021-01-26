@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import projectActions from "../redux/actions/project.actions";
-import ReactMarkdown from "react-markdown";
-import Pagination from "@material-ui/lab/Pagination";
 import {
+  Avatar,
   Button,
   Grid,
   IconButton,
-  InputBase,
+  makeStyles,
   Tooltip,
 } from "@material-ui/core";
-import userActions from "../redux/actions/user.actions";
-import { Search } from "@material-ui/icons";
+import Pagination from "@material-ui/lab/Pagination";
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import SplitButton from "../components/MergeButtonMUI";
+import projectActions from "../redux/actions/project.actions";
 import topicActions from "../redux/actions/topic.actions";
+import userActions from "../redux/actions/user.actions";
 import honk from "../images/circle-cropped.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -93,78 +91,39 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
-  divBtn: {
-    display: "flex",
-    flexGrow: 1,
-    justifyContent: "flex-end",
-    // marginRight: theme.spacing(10),
-    marginTop: theme.spacing(1),
-  },
-  btn: {
-    color: "#fff",
-    border: "1px solid #fff",
-    width: "40px",
-    height: "40px",
-    borderRadius: "10px",
-  },
-  inputRoot: {
-    color: "inherit",
-    backgroundColor: "rgb(256, 256, 256, 0.4)",
-    borderRadius: "10px",
-    marginTop: theme.spacing(2),
-    alignItems: "center",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-  spacing: {
-    marginTop: theme.spacing(2),
-  },
 }));
 
-const ProjectPage = () => {
+const ProjectsOfFollowingPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const projects = useSelector((state) => state.project.projects);
+  const projects = useSelector((state) => state.project.projects).flat();
   const totalPageNum = useSelector((state) => state.project.totalPageNum);
   const [pageNum, setPageNum] = useState(1);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const following = useSelector((state) => state.user.following).map(
     (item) => item._id
   );
-  const [showSearch, setShowSearch] = useState(null);
-  const [query, setQuery] = useState("");
-  const [searchBy, setSearchBy] = useState("");
-  console.log("following list", following);
+  // console.log("following list", following);
+  // console.log("projects", projects);
 
   useEffect(() => {
     dispatch(userActions.getListOfFollowing());
-  }, [dispatch]);
+    dispatch(projectActions.projectsOfFollowing(pageNum));
+  }, [dispatch, pageNum]);
 
   const handlePageChange = (event, value) => {
     setPageNum(value);
   };
 
-  useEffect(() => {
-    dispatch(projectActions.projectsRequest(pageNum));
-  }, [dispatch, pageNum]);
-
-  useEffect(() => {
-    if (searchBy && query) {
-      dispatch(projectActions.projectsRequest(pageNum, query, searchBy));
-    }
-  }, [dispatch, pageNum, searchBy, query]);
+  // const searchBy = "author";
+  // following?.forEach((follow) => {
+  //   // follow = "ObjectId(" + follow.toString() + `")`;
+  //   follow = `ObjectId("${follow}")`;
+  //   // const followID = `ObjectId("${follow}")`;
+  //   console.log("pls", follow);
+  //   dispatch(projectActions.projectsOfFollowing(pageNum, follow));
+  // });
 
   const startFollowing = (userId) => {
     dispatch(userActions.followRequest(userId));
@@ -172,6 +131,7 @@ const ProjectPage = () => {
 
   const handleUnfollow = (userId) => {
     dispatch(userActions.unfollow(userId));
+    dispatch(projectActions.projectsOfFollowing(pageNum));
   };
 
   const addTopic = () => {
@@ -185,15 +145,6 @@ const ProjectPage = () => {
   };
 
   const options = ["Project", "Topic"];
-
-  const searchOptions = ["Title", "Content", "Tags"];
-  // const searchOptions = ["Title", "Description"];
-
-  const handleSearchText = (e) => {
-    e.preventDefault();
-    setQuery(e.target.value);
-  };
-
   return (
     <>
       <div
@@ -215,7 +166,7 @@ const ProjectPage = () => {
       </div>
       <div className={classes.root}>
         <div className={classes.main}>
-          <h1 className="pt-2 mt-1">All Projects</h1>
+          <h1 className="pt-2 mt-1">Projects</h1>
           {isAuthenticated === true && (
             <SplitButton
               options={options}
@@ -224,55 +175,6 @@ const ProjectPage = () => {
             />
           )}
         </div>
-        {showSearch ? (
-          <Grid
-            container={true}
-            justify="flex-end"
-            alignItems="center"
-            direction="row"
-            // sm={11}
-            lg={11}
-            spacing={1}
-            // className={classes.search}
-            classes={{ container: classes.search }}
-          >
-            <Grid item>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                value={query}
-                onChange={handleSearchText}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Grid>
-            <Grid item sm={2} lg={1} className={classes.spacing}>
-              <SplitButton options={searchOptions} setSearchBy={setSearchBy} />
-              {/* <SplitButton options={["Title", "Content"]} /> */}
-            </Grid>
-            <Grid item sm={1} lg={1}></Grid>
-          </Grid>
-        ) : (
-          <Grid
-            container
-            // className={classes.divBtn}
-            xs={11}
-            // sm={11}
-            lg={11}
-            classes={{ container: classes.divBtn }}
-          >
-            <Grid item lg={1}>
-              <IconButton
-                classes={{ root: classes.btn }}
-                onClick={() => setShowSearch("show")}
-              >
-                <Search fontSize="medium" />
-              </IconButton>
-            </Grid>
-          </Grid>
-        )}
         <Grid container>
           <ul className={classes.list}>
             {projects?.map((project, index) => {
@@ -317,9 +219,8 @@ const ProjectPage = () => {
                           {project.content}
                         </ReactMarkdown>
                       </div>
-                      {project.tags
-                        ? project.tags.map((tag) => <small>#{tag} </small>)
-                        : ""}
+                      {project.tags &&
+                        project.tags.map((tag) => <small>#{tag} </small>)}
                     </div>
                   </li>
                 </Grid>
@@ -349,4 +250,4 @@ const ProjectPage = () => {
   );
 };
 
-export default ProjectPage;
+export default ProjectsOfFollowingPage;

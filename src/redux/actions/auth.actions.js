@@ -11,7 +11,7 @@ const loginRequest = ({ email, password }) => async (dispatch) => {
     const res = await api.post(`auth/login`, { email, password });
     dispatch({ type: types.LOGIN_SUCCESS, payload: res.data.data });
     toast.success(`Welcome ${res.data.data.user.name}`);
-    dispatch(routeActions.redirect("/"));
+    dispatch(routeActions.redirect("/following/projects"));
   } catch (error) {
     dispatch({ type: types.LOGIN_FAILURE, payload: null });
     toast.error(`ERROR: ` + error.message);
@@ -31,7 +31,7 @@ const registerAccount = ({ name, email, password, avatarURL }) => async (
     });
     console.log("avatar", avatarURL);
     dispatch({ type: types.REGISTER_SUCCESS, payload: res.data.data });
-    dispatch(routeActions.redirect("/login"));
+    dispatch(routeActions.redirect("/"));
     toast.success(`Welcome ${res.data.data.user.name}`);
   } catch (error) {
     dispatch({ type: types.REGISTER_FAILURE, payload: null });

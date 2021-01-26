@@ -42,6 +42,7 @@ const ProfilePage = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
   const history = useHistory();
+  console.log("user", user);
 
   const children = (
     <>
@@ -63,13 +64,13 @@ const ProfilePage = () => {
       <br />
       <br />
       <Typography variant="h6" gutterBottom align="center">
-        Name: {user.name}
+        Name: {user?.name}
       </Typography>
       <Typography variant="h6" gutterBottom align="center">
-        Email: {user.email}
+        Email: {user?.email}
       </Typography>
       <Typography variant="h6" gutterBottom align="center">
-        User since: <Moment format="MM-DD-YYYY">{user.createdAt}</Moment>
+        User since: <Moment format="MM-DD-YYYY">{user?.createdAt}</Moment>
       </Typography>
       <Button
         className={classes.button}

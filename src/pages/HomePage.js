@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button, ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import SearchForm from "../components/SearchForm";
@@ -8,8 +7,37 @@ import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import TopicCard2 from "../components/TopicCard2";
-import { Grid } from "@material-ui/core";
+import {
+  Grid,
+  IconButton,
+  InputBase,
+  rgbToHex,
+  Tooltip,
+} from "@material-ui/core";
 import projectActions from "../redux/actions/project.actions";
+import clsx from "clsx";
+import SplitButton from "../components/MergeButtonMUI";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { Search } from "@material-ui/icons";
+import honk from "../images/circle-cropped.png";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#757ce8",
+      main: "#6a75a3",
+      dark: "#8b97cc",
+      disabled: "#99a2c7",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#fff",
+      main: "#bdbdbd",
+      dark: "#424242",
+      contrastText: "#000",
+    },
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
   },
   paper: {
-    marginTop: theme.spacing(10),
+    // marginTop: theme.spacing(10),
     marginLeft: theme.spacing(16),
     marginRight: theme.spacing(16),
     marginBottom: theme.spacing(2),
@@ -53,12 +81,50 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   search: {
-    marginLeft: theme.spacing(16),
-    width: "80vw",
+    // marginLeft: theme.spacing(16),
+    // marginRight: theme.spacing(20),
+    // width: "40vw",
+
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    flexGrow: 1,
   },
   card: {
     marginLeft: theme.spacing(18),
     marginRight: theme.spacing(12),
+  },
+  divBtn: {
+    display: "flex",
+    flexGrow: 1,
+    justifyContent: "flex-end",
+    // marginRight: theme.spacing(10),
+  },
+  btn: {
+    color: "#fff",
+    border: "1px solid #fff",
+    width: "40px",
+    height: "40px",
+    borderRadius: "10px",
+  },
+  inputRoot: {
+    color: "inherit",
+    backgroundColor: "rgb(256, 256, 256, 0.4)",
+    borderRadius: "10px",
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
   },
 }));
 
@@ -69,6 +135,9 @@ const HomePage = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const totalPageNum = useSelector((state) => state.topic.totalPageNum);
   const [pageNum, setPageNum] = useState(1);
+  const [showSearch, setShowSearch] = useState(null);
+  const [query, setQuery] = useState("");
+  const [searchBy, setSearchBy] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -76,13 +145,25 @@ const HomePage = () => {
     setPageNum(value);
   };
 
+  const handleSearchText = (e) => {
+    e.preventDefault();
+    setQuery(e.target.value);
+  };
+
   const clickTopic = (topicId) => {
     history.push(`/topics/${topicId}`);
+    setShowSearch(null);
   };
 
   useEffect(() => {
     dispatch(topicActions.topicsRequest(pageNum));
   }, [dispatch, pageNum]);
+
+  useEffect(() => {
+    if (searchBy) {
+      dispatch(topicActions.topicsRequest(pageNum, searchBy, query));
+    }
+  }, [dispatch, pageNum, searchBy, query]);
 
   const addTopic = () => {
     dispatch(topicActions.cancelSelected());
@@ -93,6 +174,9 @@ const HomePage = () => {
     dispatch(projectActions.cancelSelected());
     history.push(`/editproject`);
   };
+
+  const options = ["Project", "Topic"];
+  const searchOptions = ["Title", "Description"];
 
   const children = (
     <>
@@ -110,43 +194,41 @@ const HomePage = () => {
       >
         Goose
       </h1>
+
       {isAuthenticated === true && (
-        <DropdownButton
-          as={ButtonGroup}
-          variant="outline-light"
-          title="Create new"
-          id="bg-nested-dropdown"
-          style={{
-            border: "2px solid #fff",
-            borderRadius: "5px",
-            fontWeight: "5px",
-            backgroundColor: "rgb(256, 256, 256, .2)",
-          }}
-          // className="glass-effect"
-        >
-          <Dropdown.Item
-            as={Button}
-            variant="outline-light"
-            eventKey="1"
-            onClick={addTopic}
-          >
-            Topic
-          </Dropdown.Item>
-          <Dropdown.Item
-            as={Button}
-            variant="outline-light"
-            eventKey="2"
-            onClick={addProject}
-          >
-            Project
-          </Dropdown.Item>
-        </DropdownButton>
+        <SplitButton
+          options={options}
+          addTopic={addTopic}
+          addProject={addProject}
+        />
       )}
     </>
   );
 
+  const handleHonk = () => {
+    // alert("honk honk");
+    history.push("/admin/messages");
+  };
+
   return (
     <>
+      <div
+        style={{
+          position: "sticky",
+          left: "90vw",
+          top: "85vh",
+        }}
+      >
+        <Tooltip title="Honk Chat">
+          <IconButton onClick={() => handleHonk()}>
+            <img
+              src={honk}
+              alt="honk"
+              style={{ height: "80px", width: "80px" }}
+            />
+          </IconButton>
+        </Tooltip>
+      </div>
       <div className={classes.root}>
         <Paper
           variant="outlined"
@@ -154,10 +236,54 @@ const HomePage = () => {
           children={children}
           className={classes.paper}
         />
+        {showSearch ? (
+          <Grid
+            container={true}
+            justify="flex-end"
+            alignItems="center"
+            direction="row"
+            // sm={11}
+            // lg={11}
+            spacing={1}
+            // className={classes.search}
+            classes={{ container: classes.search }}
+          >
+            <Grid item>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                value={query}
+                onChange={handleSearchText}
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Grid>
+            <Grid item lg={1}>
+              <SplitButton options={searchOptions} setSearchBy={setSearchBy} />
+            </Grid>
+            <Grid item sm={1} lg={2}></Grid>
+          </Grid>
+        ) : (
+          <Grid
+            container
+            // className={classes.divBtn}
 
-        <div className={classes.search}>
-          <SearchForm />
-        </div>
+            // sm={11}
+            // lg={11}
+            classes={{ container: classes.divBtn }}
+          >
+            <Grid item xs={3} sm={3} lg={3}>
+              <IconButton
+                classes={{ root: classes.btn }}
+                onClick={() => setShowSearch("show")}
+              >
+                <Search fontSize="large" />
+              </IconButton>
+            </Grid>
+          </Grid>
+        )}
         <Grid container spacing={3} className={classes.card}>
           {topics.map((topic) => {
             // console.log(topic);
@@ -170,6 +296,7 @@ const HomePage = () => {
             );
           })}
         </Grid>
+
         <Grid justify="center" container={true}>
           <Pagination
             count={totalPageNum}

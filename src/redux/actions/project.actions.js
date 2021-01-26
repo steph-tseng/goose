@@ -9,7 +9,6 @@ const projectsRequest = (pagenum, query, searchBy = "topic") => async (
   dispatch({ type: types.GET_PROJECTS_REQUEST, payload: null });
   try {
     // TODO
-    const res = await api.get(`projects?page=${pagenum}`);
     if (searchBy && query) {
       // const res = await api.get(
       //   `/projects?page=${pagenum}&limit=10&${searchBy}[$regex]=${query}&${searchBy}[$options]=i`
@@ -18,10 +17,29 @@ const projectsRequest = (pagenum, query, searchBy = "topic") => async (
         `/projects?page=${pagenum}&limit=10&${searchBy}[$regex]=${query}&${searchBy}[$options]=i`
       );
       dispatch({ type: types.GET_PROJECTS_SUCCESS, payload: res.data.data });
+    } else {
+      const res = await api.get(`projects?page=${pagenum}`);
+      dispatch({ type: types.GET_PROJECTS_SUCCESS, payload: res.data.data });
     }
-    dispatch({ type: types.GET_PROJECTS_SUCCESS, payload: res.data.data });
   } catch (error) {
     dispatch({ type: types.GET_PROJECTS_FAILURE, payload: null });
+    toast.error(error.message);
+  }
+};
+
+const projectsOfFollowing = (pageNum, query, searchBy = "author") => async (
+  dispatch
+) => {
+  dispatch({ type: types.GET_PROJECTS_OF_FOLLOWING_REQUEST, payload: null });
+  try {
+    // TODO
+    const res = await api.get(`/projects/following?page=${pageNum}&limit=10`);
+    dispatch({
+      type: types.GET_PROJECTS_OF_FOLLOWING_SUCCESS,
+      payload: res.data.data,
+    });
+  } catch (error) {
+    dispatch({ type: types.GET_PROJECTS_OF_FOLLOWING_FAILURE, payload: null });
     toast.error(error.message);
   }
 };
@@ -180,6 +198,7 @@ const postEmoji = (targetType, targetId, emoji) => async (dispatch) => {
 const projectActions = {
   projectsRequest,
   getSelctedProject,
+  projectsOfFollowing,
   createNewProject,
   updateProject,
   cancelSelected,

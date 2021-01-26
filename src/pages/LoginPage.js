@@ -45,7 +45,7 @@ const LoginPage = () => {
     dispatch(authActions.loginGoogle(response.accessToken));
   };
 
-  if (isAuthenticated) return <Redirect to="/" />;
+  if (isAuthenticated) return <Redirect to="/following/projects" />;
   return (
     <Container
       className="pt-5 d-flex justify-content-center text-center "

@@ -19,6 +19,7 @@ import {
   FormControl,
   InputLabel,
   NativeSelect,
+  Tooltip,
   withStyles,
 } from "@material-ui/core";
 import InputBase from "@material-ui/core/InputBase";
@@ -102,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
   textBox: {
     width: "95%",
     // padding: "5px",
+    borderRadius: "5px",
   },
   formControl: {
     margin: theme.spacing(1),
@@ -271,27 +273,43 @@ const AddEditProjectPage = () => {
               aria-label="text primary button group"
               className={classes.btnGroup}
             >
-              <Button onClick={() => insertMetachars("**", "**")}>
-                <FormatBoldIcon fontSize="small" />
-              </Button>
-              <Button onClick={() => insertMetachars("_", "_")}>
-                <FormatItalicIcon fontSize="small" />
-              </Button>
-              <Button onClick={() => insertMetachars("<u>", "</u>")}>
-                <FormatUnderlinedIcon fontSize="small" />
-              </Button>
-              <Button onClick={() => insertMetachars("<ul><li>", "</li></ul>")}>
-                <FormatListBulletedIcon fontSize="small" />
-              </Button>
-              <Button onClick={() => insertMetachars("<del>", "</del>")}>
-                <FormatStrikethroughIcon fontSize="small" />
-              </Button>
-              <Button onClick={() => insertMetachars("<small>", "</small>")}>
-                <FormatSizeIcon fontSize="small" />
-              </Button>
-              <Button onClick={() => insertMetachars("[", "](link)")}>
-                <LinkIcon fontSize="small" />
-              </Button>
+              <Tooltip title="Bold">
+                <Button onClick={() => insertMetachars("**", "**")}>
+                  <FormatBoldIcon fontSize="small" />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Italicize">
+                <Button onClick={() => insertMetachars("_", "_")}>
+                  <FormatItalicIcon fontSize="small" />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Underline">
+                <Button onClick={() => insertMetachars("<u>", "</u>")}>
+                  <FormatUnderlinedIcon fontSize="small" />
+                </Button>
+              </Tooltip>
+              <Tooltip title="List">
+                <Button
+                  onClick={() => insertMetachars("<ul><li>", "</li></ul>")}
+                >
+                  <FormatListBulletedIcon fontSize="small" />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Strikethrough">
+                <Button onClick={() => insertMetachars("<del>", "</del>")}>
+                  <FormatStrikethroughIcon fontSize="small" />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Decrease font size">
+                <Button onClick={() => insertMetachars("<small>", "</small>")}>
+                  <FormatSizeIcon fontSize="small" />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Link">
+                <Button onClick={() => insertMetachars("[", "](link)")}>
+                  <LinkIcon fontSize="small" />
+                </Button>
+              </Tooltip>
             </ButtonGroup>
             <TextField
               ref={textAreaRef}
@@ -356,7 +374,7 @@ const AddEditProjectPage = () => {
               variant="outlined"
               className={classes.btn}
               onClick={handleSubmitProject}
-              disabled={!formData.textBox}
+              // disabled={!formData.textBox}
               classes={{ disabled: classes.disabledButton }}
             >
               {addOrEdit === "Edit" ? "Update" : "Submit"}
@@ -370,7 +388,15 @@ const AddEditProjectPage = () => {
             </Button>
           </ButtonGroup>
         </div>
-        <div className={classes.preview}>
+        <div
+          className={classes.preview}
+          style={{
+            backgroundColor: "rgba(124, 131, 160,0.7)",
+            filter: "blur(0.1px)",
+            border: "1px solid black",
+            color: "white",
+          }}
+        >
           <h4>Preview</h4>
           <hr />
           <h4>{formData.title}</h4>

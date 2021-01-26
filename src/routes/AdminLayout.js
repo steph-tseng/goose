@@ -25,6 +25,7 @@ import ChatPage from "../pages/Admin/ChatPage";
 import UpdateProfilePage from "../pages/Admin/UpdateProfilePage";
 import UserListPage from "../pages/Admin/UserListPage";
 import FollowingListPage from "../pages/Admin/FollowingListPage";
+import { Group, GroupAdd } from "@material-ui/icons";
 
 const drawerWidth = 240;
 
@@ -191,7 +192,15 @@ const AdminLayout = () => {
               onClick={() => history.push(`/admin/${text.toLowerCase()}`)}
             >
               <ListItemIcon>
-                {index % 2 === 0 ? <AccountBoxIcon /> : <MessageIcon />}
+                {index === 0 ? (
+                  <AccountBoxIcon />
+                ) : index === 1 ? (
+                  <MessageIcon />
+                ) : index === 2 ? (
+                  <Group />
+                ) : (
+                  <GroupAdd />
+                )}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

@@ -12,6 +12,7 @@ const projectReducer = (state = initialState, action) => {
 
   switch (type) {
     case types.GET_PROJECTS_REQUEST:
+    case types.GET_PROJECTS_OF_FOLLOWING_REQUEST:
     case types.GET_REVIEW_REQUEST:
       return { ...state, loading: true };
     case types.GET_PROJECTS_SUCCESS:
@@ -21,7 +22,14 @@ const projectReducer = (state = initialState, action) => {
         totalPageNum: payload.totalPages,
         loading: false,
       };
+    case types.GET_PROJECTS_OF_FOLLOWING_SUCCESS:
+      return {
+        ...state,
+        projects: payload.projects,
+        loading: false,
+      };
     case types.GET_PROJECTS_FAILURE:
+    case types.GET_PROJECTS_OF_FOLLOWING_FAILURE:
     case types.GET_REVIEW_FAILURE:
       return { ...state, loading: false };
 

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
   },
   paper: {
-    height: "70vh",
+    height: "65vh",
     width: "70vw",
     display: "flex",
     alignItems: "flex-end",
@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     overflowY: "scroll",
     padding: theme.spacing(2),
+    backgroundImage:
+      "url(https://t4.ftcdn.net/jpg/03/60/19/43/360_F_360194339_ikpyT38Pc4LUOG3a4X8VgoBfCQXOFMen.jpg)",
+    backgroundSize: "70vw, 40vh",
+    backgroundPosition: "center",
   },
 
   textField: {
@@ -68,6 +72,8 @@ const ChatPage = () => {
   const [selectedConversation, setSelectedConversation] = useState({
     type: conversationTypes.GLOBAL,
   });
+  console.log("globe", globalMessages);
+  console.log("current user", currentUser);
 
   useEffect(() => {
     const tokenString = localStorage.getItem("accessToken");
@@ -107,7 +113,7 @@ const ChatPage = () => {
       socket.on(socketTypes.NOTIFICATION, (data) => {
         if (data.onlineUsers) {
           console.log("data", data);
-          setOnlineUsers(data.onlineUsers);
+          setOnlineUsers(data.onlineUsers + 1);
         }
         if (data.globalMessages) {
           setGlobalMessages(data.globalMessages);
@@ -139,18 +145,13 @@ const ChatPage = () => {
 
       <Paper className={classes.paper}>
         {/* <hr /> */}
-        <div className={classes.messageBox}>
-          <ScrollToBottom className="messages border mb-2">
-            <ul className="list-unstyled">
-              {globalMessages.map((msg) => (
-                <>
-                  {/* {console.log("msg", msg)} */}
-                  <Message key={msg._id} msg={msg} />
-                </>
-              ))}
-            </ul>
-          </ScrollToBottom>
-        </div>
+        <ScrollToBottom mode="bottom" className={classes.messageBox}>
+          <ul className="list-unstyled">
+            {globalMessages?.map((msg) => (
+              <Message key={msg._id} msg={msg} />
+            ))}
+          </ul>
+        </ScrollToBottom>
         <form onSubmit={handleSendMessage} className={classes.textField}>
           <TextField
             className={classes.textField}

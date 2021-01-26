@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import userActions from "../../redux/actions/user.actions";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(3),
+  root: {
+    padding: theme.spacing(2),
     borderRadius: "10px",
+
+    // color: "#fff",
+    // width: "80vw",
   },
   listItem: {
     display: "flex",
@@ -14,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginRight: theme.spacing(2),
+  },
+  h1: {
+    marginLeft: theme.spacing(4),
   },
   h4: {
     marginTop: theme.spacing(1),
@@ -24,15 +30,29 @@ const UserListPage = () => {
   const classes = useStyles();
   const users = useSelector((state) => state.user.users);
   const dispatch = useDispatch();
+  const following = useSelector((state) => state.user.following).map(
+    (item) => item._id
+  );
 
   useEffect(() => {
     dispatch(userActions.getUsers());
   }, [dispatch]);
 
+  const startFollowing = (userId) => {
+    dispatch(userActions.followRequest(userId));
+  };
+
+  const handleUnfollow = (userId) => {
+    dispatch(userActions.unfollow(userId));
+  };
+
   console.log(users);
   return (
     <div>
-      <Paper className={classes.paper}>
+      <Paper className={classes.root}>
+        {/* <div className="glass-effect2"> */}
+        <h1 className={classes.h1}>List of all users</h1>
+        <hr />
         <ul className="">
           {users?.map((user) => (
             <li key={user._id} className={classes.listItem}>
@@ -46,10 +66,27 @@ const UserListPage = () => {
                 className={classes.avatar}
               />
               <h4 className={classes.h4}>{user.name}</h4>
-              <Button>Follow</Button>
+              {!following.includes(user._id) ? (
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={() => startFollowing(user._id)}
+                >
+                  Follow
+                </Button>
+              ) : (
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={() => handleUnfollow(user._id)}
+                >
+                  Unfollow
+                </Button>
+              )}
             </li>
           ))}
         </ul>
+        {/* </div> */}
       </Paper>
     </div>
   );

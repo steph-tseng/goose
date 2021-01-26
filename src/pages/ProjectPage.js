@@ -117,7 +117,7 @@ const ProjectPage = () => {
         <h1 className=" mt-1">{project?.title}</h1>
         <ReactMarkdown allowDangerousHtml>{project?.content}</ReactMarkdown>
         {project?.tags
-          ? project?.tags?.map((tag) => <small>#{tag} </small>)
+          ? project?.tags?.map((tag) => <small key={tag}>#{tag} </small>)
           : ""}
 
         {isAuthenticated && (
