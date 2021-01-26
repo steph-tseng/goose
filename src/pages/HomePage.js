@@ -92,8 +92,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   card: {
-    marginLeft: theme.spacing(18),
-    marginRight: theme.spacing(12),
+    // marginLeft: theme.spacing(18),
+    // marginRight: theme.spacing(12),
   },
   divBtn: {
     display: "flex",
@@ -284,7 +284,7 @@ const HomePage = () => {
             </Grid>
           </Grid>
         )}
-        <Grid container spacing={3} className={classes.card}>
+        <Grid container spacing={3} className={classes.card} justify="center">
           {topics.map((topic) => {
             // console.log(topic);
             return (
