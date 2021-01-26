@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 import AlertMsg from "./components/AlertMsg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useHistory } from "react-router-dom";
