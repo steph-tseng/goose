@@ -33,7 +33,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
 import authActions from "./redux/actions/auth.actions";
 import NotFoundPage from "./pages/NotFoundPage";
-import MessengerCustomerChat from "react-messenger-customer-chat";
+// import MessengerCustomerChat from "react-messenger-customer-chat";
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
 import honk from "../src/images/circle-cropped.png";
 
@@ -69,7 +69,8 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const classes = useStyles();
+  const loading = useSelector((state) => state.auth.loading);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -83,16 +84,22 @@ const App = () => {
   return (
     <>
       {isAuthenticated !== null && (
-        <Router>
-          <AlertMsg />
-          <Switch>
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/register" component={RegisterPage} />
-            <PrivateRoute path="/admin" component={AdminLayout} />
-            <Route path="/" component={PublicLayout} />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Router>
+        <>
+          {loading ? (
+            <img src="https://i.imgur.com/LyTz4RO.gif" alt="Dancing goose" />
+          ) : (
+            <Router>
+              <AlertMsg />
+              <Switch>
+                <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/register" component={RegisterPage} />
+                <PrivateRoute path="/admin" component={AdminLayout} />
+                <Route path="/" component={PublicLayout} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </Router>
+          )}
+        </>
       )}
     </>
   );
