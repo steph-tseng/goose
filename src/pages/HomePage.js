@@ -94,6 +94,8 @@ const useStyles = makeStyles((theme) => ({
   card: {
     // marginLeft: theme.spacing(18),
     // marginRight: theme.spacing(12),
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
   },
   divBtn: {
     display: "flex",
@@ -217,6 +219,7 @@ const HomePage = () => {
           position: "sticky",
           left: "90vw",
           top: "85vh",
+          zIndex: 1000,
         }}
       >
         <Tooltip title="Honk Chat">
