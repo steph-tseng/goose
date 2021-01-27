@@ -26,6 +26,21 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: ["Arvo"],
   },
+  palette: {
+    primary: {
+      light: "#757ce8",
+      main: "#6a75a3",
+      dark: "#8b97cc",
+      disabled: "#99a2c7",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#fff",
+      main: "#bdbdbd",
+      dark: "#424242",
+      contrastText: "#000",
+    },
+  },
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -119,6 +134,13 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(18),
     fontSize: "16px",
     fontFamily: "Arvo",
+  },
+  a: {
+    color: theme.palette.primary.main,
+    "&:hover": {
+      color: theme.palette.primary.light,
+      textDecoration: "none",
+    },
   },
 }));
 
@@ -264,12 +286,12 @@ const ProjectsOfFollowingPage = () => {
               <Paper className={classes.text}>
                 <Typography variant="h6">
                   You're not following anyone! Go follow some people from the
-                  <a as={Link} href="/admin/users">
+                  <a as={Link} href="/admin/users" className={classes.a}>
                     {" "}
                     full list of users
                   </a>{" "}
                   or from
-                  <a as={Link} href="/projects">
+                  <a as={Link} href="/projects" className={classes.a}>
                     {" "}
                     the list of all projects
                   </a>{" "}
