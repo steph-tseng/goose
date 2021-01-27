@@ -4,7 +4,6 @@ import {
   createMuiTheme,
   Grid,
   IconButton,
-  Link,
   makeStyles,
   Paper,
   ThemeProvider,
@@ -21,6 +20,7 @@ import projectActions from "../redux/actions/project.actions";
 import topicActions from "../redux/actions/topic.actions";
 import userActions from "../redux/actions/user.actions";
 import honk from "../images/circle-cropped.png";
+import { Link } from "react-router-dom";
 
 const theme = createMuiTheme({
   typography: {
@@ -264,9 +264,16 @@ const ProjectsOfFollowingPage = () => {
               <Paper className={classes.text}>
                 <Typography variant="h6">
                   You're not following anyone! Go follow some people from the
-                  <Link href="/admin/users"> full list of users</Link> or from
-                  <Link href="/projects"> the list of all projects</Link> and
-                  see their projects here.
+                  <a as={Link} href="/admin/users">
+                    {" "}
+                    full list of users
+                  </a>{" "}
+                  or from
+                  <a as={Link} href="/projects">
+                    {" "}
+                    the list of all projects
+                  </a>{" "}
+                  and see their projects here.
                 </Typography>
               </Paper>
             )}
