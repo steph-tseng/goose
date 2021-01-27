@@ -70,11 +70,12 @@ const cancelSelected = () => async (dispatch) => {
 const createNewTopic = (
   title,
   description,
+  image,
   redirectTo = "__GO_BACK__"
 ) => async (dispatch) => {
   dispatch({ type: types.CREATE_TOPIC_REQUEST, payload: null });
   try {
-    const res = await api.post(`topics`, { title, description });
+    const res = await api.post(`topics`, { title, description, image });
     dispatch({ type: types.CREATE_TOPIC_SUCCESS, payload: res.data.data });
     dispatch(routeActions.redirect(redirectTo));
   } catch (error) {
@@ -87,11 +88,16 @@ const updateTopic = (
   topicId,
   title,
   description,
+  image,
   redirectTo = "__GO_BACK__"
 ) => async (dispatch) => {
   dispatch({ type: types.UPDATE_TOPIC_REQUEST, payload: null });
   try {
-    const res = await api.put(`/topics/${topicId}`, title, description);
+    const res = await api.put(`/topics/${topicId}`, {
+      title,
+      description,
+      image,
+    });
     dispatch({ type: types.GET_TOPIC_SUCCESS, payload: res.data.data });
     dispatch(routeActions.redirect(redirectTo));
   } catch (error) {

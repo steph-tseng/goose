@@ -61,8 +61,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     // marginTop: theme.spacing(10),
-    marginLeft: theme.spacing(16),
-    marginRight: theme.spacing(16),
+    // marginLeft: theme.spacing(16),
+    // marginRight: theme.spacing(16),
     marginBottom: theme.spacing(2),
     borderRadius: "10px",
     padding: theme.spacing(4),
@@ -239,83 +239,92 @@ const HomePage = () => {
         className={classes.root}
         style={{ marginTop: isAuthenticated ? 0 : "5rem" }}
       >
-        <Paper
-          variant="outlined"
-          elevation={24}
-          children={children}
-          className={classes.paper}
-        />
-        {showSearch ? (
-          <Grid
-            container={true}
-            justify="flex-end"
-            alignItems="center"
-            direction="row"
-            // sm={11}
-            // lg={11}
-            spacing={1}
-            // className={classes.search}
-            classes={{ container: classes.search }}
-          >
-            <Grid item>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                value={query}
-                onChange={handleSearchText}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Grid>
-            <Grid item lg={1}>
-              <SplitButton options={searchOptions} setSearchBy={setSearchBy} />
-            </Grid>
-            <Grid item sm={1} lg={2}></Grid>
-          </Grid>
-        ) : (
-          <Grid
-            container
-            // className={classes.divBtn}
-
-            // sm={11}
-            // lg={11}
-            classes={{ container: classes.divBtn }}
-          >
-            <Grid item xs={3} sm={3} lg={3}>
-              <IconButton
-                classes={{ root: classes.btn }}
-                onClick={() => setShowSearch("show")}
-              >
-                <Search fontSize="large" />
-              </IconButton>
-            </Grid>
-          </Grid>
-        )}
-        <Grid container spacing={3} className={classes.card} justify="center">
-          {topics.map((topic) => {
-            // console.log(topic);
-            return (
-              <Grid key={topic._id} item onClick={() => clickTopic(topic._id)}>
-                {/* <TopicCard topic={topic} /> */}
-                <TopicCard2 topic={topic} key={topic._id} />
-                {/* <HoverCard topic={topic} /> */}
-              </Grid>
-            );
-          })}
-        </Grid>
-
-        <Grid justify="center" container={true}>
-          <Pagination
-            count={totalPageNum}
-            page={pageNum}
+        <Grid container justify="center">
+          <Paper
             variant="outlined"
-            onChange={handlePageChange}
-            shape="rounded"
-            classes={{ root: classes.root }}
-            size="large"
+            elevation={24}
+            children={children}
+            className={classes.paper}
           />
+          {showSearch ? (
+            <Grid
+              container={true}
+              justify="flex-end"
+              alignItems="center"
+              direction="row"
+              // sm={11}
+              // lg={11}
+              spacing={1}
+              // className={classes.search}
+              classes={{ container: classes.search }}
+            >
+              <Grid item>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  value={query}
+                  onChange={handleSearchText}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Grid>
+              <Grid item lg={1}>
+                <SplitButton
+                  options={searchOptions}
+                  setSearchBy={setSearchBy}
+                />
+              </Grid>
+              <Grid item sm={1} lg={2}></Grid>
+            </Grid>
+          ) : (
+            <Grid
+              container
+              // className={classes.divBtn}
+
+              // sm={11}
+              // lg={11}
+              classes={{ container: classes.divBtn }}
+            >
+              <Grid item xs={3} sm={3} lg={3}>
+                <IconButton
+                  classes={{ root: classes.btn }}
+                  onClick={() => setShowSearch("show")}
+                >
+                  <Search fontSize="large" />
+                </IconButton>
+              </Grid>
+            </Grid>
+          )}
+          <Grid container spacing={3} className={classes.card} justify="center">
+            {topics.map((topic) => {
+              // console.log(topic);
+              return (
+                <Grid
+                  key={topic._id}
+                  item
+                  onClick={() => clickTopic(topic._id)}
+                >
+                  {/* <TopicCard topic={topic} /> */}
+                  <TopicCard2 topic={topic} key={topic._id} />
+                  {/* <HoverCard topic={topic} /> */}
+                </Grid>
+              );
+            })}
+          </Grid>
+
+          <Grid justify="center" container={true}>
+            <Pagination
+              count={totalPageNum}
+              page={pageNum}
+              variant="outlined"
+              onChange={handlePageChange}
+              shape="rounded"
+              classes={{ root: classes.root }}
+              size="large"
+            />
+          </Grid>
         </Grid>
       </div>
     </>

@@ -84,7 +84,11 @@ const TopicCard2 = ({ topic }) => {
       <div className="card-class" style={{ borderRadius: "15px" }}>
         <img
           className={classes.img}
-          src="https://www.allaboutbirds.org/guide/assets/photo/59953131-480px.jpg"
+          src={
+            topic.image
+              ? topic.image
+              : "https://www.allaboutbirds.org/guide/assets/photo/59953131-480px.jpg"
+          }
           alt="mountain"
         />
         <div className={clsx(classes.info, "info")}>

@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textAlign: "center",
     alignContent: "center",
+    justifyContent: "center",
   },
   main: {
     height: "120px",
@@ -71,8 +72,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     boxShadow: "2px 2px 4px #1b1e21",
     borderRadius: "10px",
-    marginLeft: theme.spacing(16),
-    marginRight: theme.spacing(16),
+    // marginLeft: theme.spacing(16),
+    // marginRight: theme.spacing(16),
     position: "relative",
     backgroundImage:
       "url(https://live.staticflickr.com/65535/50808353838_213a594c7d_b.jpg)",
@@ -125,8 +126,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     boxShadow: "2px 2px 4px #1b1e21",
     borderRadius: "10px",
-    marginLeft: theme.spacing(16),
-    marginRight: theme.spacing(16),
+    // marginLeft: theme.spacing(16),
+    // marginRight: theme.spacing(16),
     marginTop: theme.spacing(5),
     position: "relative",
     padding: theme.spacing(4),
@@ -217,23 +218,24 @@ const ProjectsOfFollowingPage = () => {
           </Tooltip>
         </div>
         <div className={classes.root}>
-          <div className={classes.main}>
-            <h1 className="pt-2 mt-1">Projects</h1>
-            {isAuthenticated === true && (
-              <SplitButton
-                options={options}
-                addTopic={addTopic}
-                addProject={addProject}
-              />
-            )}
-          </div>
-          <Grid container>
+          <Grid container justify="center">
+            <div className={classes.main}>
+              <h1 className="pt-2 mt-1">Projects</h1>
+              {isAuthenticated === true && (
+                <SplitButton
+                  options={options}
+                  addTopic={addTopic}
+                  addProject={addProject}
+                />
+              )}
+            </div>
+
             {projects.length > 0 ? (
               <ul className={classes.list}>
                 {projects?.map((project, index) => {
                   // console.log(topic);
                   return (
-                    <Grid item sm={11} lg={12} key={project._id}>
+                    <Grid item key={project._id}>
                       <li className={classes.listItem} key={project._id}>
                         <Avatar
                           src={
@@ -283,21 +285,23 @@ const ProjectsOfFollowingPage = () => {
                 })}
               </ul>
             ) : (
-              <Paper className={classes.text}>
-                <Typography variant="h6">
-                  You're not following anyone! Go follow some people from the
-                  <Link to="/admin/users" className={classes.a}>
-                    {" "}
-                    full list of users
-                  </Link>{" "}
-                  or from
-                  <Link to="/projects" className={classes.a}>
-                    {" "}
-                    the list of all projects
-                  </Link>{" "}
-                  and see their projects here.
-                </Typography>
-              </Paper>
+              <Grid item>
+                <Paper className={classes.text}>
+                  <Typography variant="h6">
+                    You're not following anyone! Go follow some people from the
+                    <Link to="/admin/users" className={classes.a}>
+                      {" "}
+                      full list of users
+                    </Link>{" "}
+                    or from
+                    <Link to="/projects" className={classes.a}>
+                      {" "}
+                      the list of all projects
+                    </Link>{" "}
+                    and see their projects here.
+                  </Typography>
+                </Paper>
+              </Grid>
             )}
           </Grid>
           <div

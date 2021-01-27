@@ -63,6 +63,7 @@ const AddEditTopicPage = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    image: "",
   });
   const redirectTo = useSelector((state) => state.route.redirectTo);
   const topic = useSelector((state) => state.topic.selectedTopic);
@@ -74,6 +75,7 @@ const AddEditTopicPage = () => {
         ...formData,
         title: topic.title,
         description: topic.description,
+        image: topic.image,
       }));
     }
   }, [topic, dispatch, addOrEdit]);
@@ -84,9 +86,9 @@ const AddEditTopicPage = () => {
 
   const handleSubmitTopic = (e) => {
     e.preventDefault();
-    const { title, description } = formData;
+    const { title, description, image } = formData;
     if (addOrEdit === "Add") {
-      dispatch(topicActions.createNewTopic(title, description));
+      dispatch(topicActions.createNewTopic(title, description, image));
     } else {
       const topicId = topic._id;
       dispatch(topicActions.updateTopic(topicId, formData));
@@ -135,6 +137,18 @@ const AddEditTopicPage = () => {
             className={classes.textBox}
             name="description"
             value={formData.description}
+            onChange={handleChange}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Image Url"
+            placeholder="Image Url"
+            multiline
+            rows={1}
+            variant="outlined"
+            className={classes.textBox}
+            name="image"
+            value={formData.image}
             onChange={handleChange}
           />
         </form>

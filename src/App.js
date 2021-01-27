@@ -68,8 +68,8 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const classes = useStyles();
+  // const history = useHistory();
+  // const classes = useStyles();
   const loading = useSelector((state) => state.auth.loading);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   useEffect(() => {
