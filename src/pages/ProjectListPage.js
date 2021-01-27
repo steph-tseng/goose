@@ -131,6 +131,14 @@ const useStyles = makeStyles((theme) => ({
   spacing: {
     marginTop: theme.spacing(2),
   },
+  search: {
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    flexGrow: 1,
+    // marginBottom: theme.spacing(1),
+  },
 }));
 
 const ProjectPage = () => {
@@ -241,7 +249,7 @@ const ProjectPage = () => {
               alignItems="center"
               direction="row"
               // sm={11}
-              lg={11}
+              // lg={11}
               spacing={1}
               // className={classes.search}
               classes={{ container: classes.search }}
@@ -265,18 +273,16 @@ const ProjectPage = () => {
                 />
                 {/* <SplitButton options={["Title", "Content"]} /> */}
               </Grid>
-              <Grid item sm={1} lg={1}></Grid>
+              <Grid item sm={1} lg={2}></Grid>
             </Grid>
           ) : (
             <Grid
               container
               // className={classes.divBtn}
-              xs={11}
-              // sm={11}
-              lg={11}
+
               classes={{ container: classes.divBtn }}
             >
-              <Grid item sm={2} lg={1}>
+              <Grid item xs={3} sm={3} lg={3}>
                 <IconButton
                   classes={{ root: classes.btn }}
                   onClick={() => setShowSearch("show")}

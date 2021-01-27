@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     // height: "100%",
-    width: "80%",
+    width: "100%",
     overflow: "hidden",
     justifySelf: "flex-end",
     alignSelf: "flex-end",
@@ -60,7 +60,7 @@ const FollowingListPage = () => {
         <h1 className={classes.h1}>List of users you are following</h1>
         <hr />
         <Grid container>
-          <Grid item xs={12} sm={8} md={8} lg={8}>
+          <Grid item xs={12} sm={8} md={8} lg={8} xl={8}>
             <ul className="">
               {following.length > 0 ? (
                 following.map((user) => (
@@ -91,6 +91,7 @@ const FollowingListPage = () => {
             sm={5}
             md={4}
             lg={4}
+            xl={4}
             justify="flex-end"
             alignContent="flex-end"
             style={{ display: "flex", flexDirection: "column" }}

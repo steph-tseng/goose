@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "flex-end",
     flexGrow: 1,
+    marginBottom: theme.spacing(1),
   },
   card: {
     // marginLeft: theme.spacing(18),
@@ -270,23 +271,16 @@ const HomePage = () => {
                   inputProps={{ "aria-label": "search" }}
                 />
               </Grid>
-              <Grid item lg={1}>
+              <Grid item sm={2} md={2} lg={1}>
                 <SplitButton
                   options={searchOptions}
                   setSearchBy={setSearchBy}
                 />
               </Grid>
-              <Grid item sm={1} lg={2}></Grid>
+              <Grid item sm={1} md={2} lg={2}></Grid>
             </Grid>
           ) : (
-            <Grid
-              container
-              // className={classes.divBtn}
-
-              // sm={11}
-              // lg={11}
-              classes={{ container: classes.divBtn }}
-            >
+            <Grid container classes={{ container: classes.divBtn }}>
               <Grid item xs={3} sm={3} lg={3}>
                 <IconButton
                   classes={{ root: classes.btn }}

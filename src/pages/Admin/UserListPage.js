@@ -82,7 +82,7 @@ const UserListPage = () => {
       <Grid container classes={{ container: classes.container }}>
         {/* <div className="glass-effect2"> */}
 
-        <Grid item sm={7}>
+        <Grid item xs={12} sm={8} md={8} lg={8} xl={8}>
           <ul className="">
             {users?.map((user) => (
               <li key={user._id} className={classes.listItem}>
@@ -121,8 +121,11 @@ const UserListPage = () => {
 
         <Grid
           item
+          xs={3}
           sm={5}
-          lg={1}
+          md={4}
+          lg={4}
+          xl={4}
           justify="flex-end"
           style={{ display: "flex", flexDirection: "column" }}
         >
