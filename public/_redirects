@@ -1,4 +1,4 @@
-/projects              /projects
-/projects/*            /projects/:splat
-/topics                /topics
-/admin/users           /admin/users
+/projects              https://fake-tumblr-goose.netlify.app/projects
+/projects/*            https://fake-tumblr-goose.netlify.app/projects/:splat
+/topics                https://fake-tumblr-goose.netlify.app/topics
+/admin/users           https://fake-tumblr-goose.netlify.app/admin/users

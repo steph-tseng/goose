@@ -144,14 +144,14 @@ const AdminLayout = () => {
           </IconButton>
 
           <Typography variant="h6" noWrap align="left">
-            <Link to="/" className={classes.link}>
-              Topics
-            </Link>
-            <Link to="/projects" className={classes.link}>
+            <Link to="/followig/projects" className={classes.link}>
               Projects
             </Link>
-            <Link to="/tags" className={classes.link}>
-              Tags
+            <Link to="/" className={classes.link}>
+              All Topics
+            </Link>
+            <Link to="/projects" className={classes.link}>
+              All Projects
             </Link>
           </Typography>
           <Typography variant="h6" align="right">
@@ -185,7 +185,7 @@ const AdminLayout = () => {
         </div>
         <Divider />
         <List>
-          {["Profile", "Honk Chat", "Users", "Following"].map((text, index) => (
+          {["Profile", "Messages", "Users", "Following"].map((text, index) => (
             <ListItem
               button
               key={text}
