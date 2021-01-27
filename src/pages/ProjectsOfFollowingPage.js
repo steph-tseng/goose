@@ -6,7 +6,6 @@ import {
   IconButton,
   makeStyles,
   Paper,
-  Link,
   ThemeProvider,
   Tooltip,
   Typography,
@@ -21,7 +20,7 @@ import projectActions from "../redux/actions/project.actions";
 import topicActions from "../redux/actions/topic.actions";
 import userActions from "../redux/actions/user.actions";
 import honk from "../images/circle-cropped.png";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const theme = createMuiTheme({
   typography: {
