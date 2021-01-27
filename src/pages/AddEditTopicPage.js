@@ -91,6 +91,7 @@ const AddEditTopicPage = () => {
       dispatch(topicActions.createNewTopic(title, description, image));
     } else {
       const topicId = topic._id;
+      const { title, description, image } = formData;
       dispatch(topicActions.updateTopic(topicId, formData));
     }
   };

@@ -86,9 +86,7 @@ const createNewTopic = (
 
 const updateTopic = (
   topicId,
-  title,
-  description,
-  image,
+  { title, description, image },
   redirectTo = "__GO_BACK__"
 ) => async (dispatch) => {
   dispatch({ type: types.UPDATE_TOPIC_REQUEST, payload: null });
@@ -98,7 +96,7 @@ const updateTopic = (
       description,
       image,
     });
-    dispatch({ type: types.GET_TOPIC_SUCCESS, payload: res.data.data });
+    dispatch({ type: types.UPDATE_TOPIC_SUCCESS, payload: res.data.data });
     dispatch(routeActions.redirect(redirectTo));
   } catch (error) {
     dispatch({ type: types.UPDATE_TOPIC_FAILURE, payload: null });

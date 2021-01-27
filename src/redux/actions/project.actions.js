@@ -108,7 +108,7 @@ const updateProject = (
   redirectTo = "__GO_BACK__"
 ) => async (dispatch) => {
   console.log("ooooo", projectId);
-  dispatch({ type: types.CREATE_PROJECT_REQUEST, payload: null });
+  dispatch({ type: types.UPDATE_PROJECT_REQUEST, payload: null });
   try {
     const res = api.put(`projects/${projectId}`, {
       title,
@@ -116,12 +116,12 @@ const updateProject = (
       topicId,
       tags,
     });
-    dispatch({ type: types.CREATE_PROJECT_SUCCESS, payload: res.data.data });
+    dispatch({ type: types.UPDATE_PROJECT_SUCCESS, payload: res.data.data });
     dispatch(routeActions.redirect(redirectTo));
     toast.success("The blog has been updated!");
   } catch (error) {
     toast.error(error);
-    dispatch({ type: types.CREATE_PROJECT_FAILURE, payload: error });
+    dispatch({ type: types.UPDATE_PROJECT_FAILURE, payload: error });
   }
 };
 
