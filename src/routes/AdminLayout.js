@@ -185,7 +185,7 @@ const AdminLayout = () => {
         </div>
         <Divider />
         <List>
-          {["Profile", "Messages", "Users", "Following"].map((text, index) => (
+          {["Profile", "Honk Chat", "Users", "Following"].map((text, index) => (
             <ListItem
               button
               key={text}
