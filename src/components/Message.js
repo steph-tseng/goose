@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const Message = ({ msg }) => {
   const classes = useStyles();
   const currentUser = useSelector((state) => state.auth.user);
-  console.log("this is one msg", msg);
+  // console.log("this is one msg", msg);
   return (
     <>
       <ThemeProvider theme={theme}>

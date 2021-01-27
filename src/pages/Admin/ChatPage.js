@@ -72,8 +72,8 @@ const ChatPage = () => {
   const [selectedConversation, setSelectedConversation] = useState({
     type: conversationTypes.GLOBAL,
   });
-  console.log("globe", globalMessages);
-  console.log("current user", currentUser);
+  // console.log("globe", globalMessages);
+  // console.log("current user", currentUser);
 
   useEffect(() => {
     const tokenString = localStorage.getItem("accessToken");

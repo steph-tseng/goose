@@ -107,7 +107,7 @@ const updateProject = (
   { title, content, topicId, tags },
   redirectTo = "__GO_BACK__"
 ) => async (dispatch) => {
-  console.log("ooooo", projectId);
+  // console.log("ooooo", projectId);
   dispatch({ type: types.UPDATE_PROJECT_REQUEST, payload: null });
   try {
     const res = api.put(`projects/${projectId}`, {

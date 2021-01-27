@@ -125,3 +125,17 @@ body {
   transition: 0.5s;
   opacity: 0;
 }
+
+.fade::after {
+  height: 100%;
+  width: 100%;
+  /* position: absolute; */
+  background-image: url(https://thedunvegangroup.com/wp-content/uploads/2019/04/Canada-Geese.jpg);
+  /* background: -webkit-linear-gradient
+    (
+      left,
+      rgba(256, 256, 256, 0.65) 0%,
+      rgba(256, 256, 256, 0) 20%,
+      rgba(256, 256, 256, 0) 80%
+    ); */
+}

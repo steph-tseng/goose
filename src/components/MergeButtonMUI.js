@@ -59,10 +59,6 @@ const SplitButton = ({ options, addTopic, addProject, setSearchBy }) => {
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const classes = useStyles();
-  // let searchBy;
-  // const pageNum = 1;
-  // console.log("q", query);
-  // console.log("options", options);
 
   const handleClick = () => {
     // console.info(`You clicked ${options[selectedIndex]}`);
