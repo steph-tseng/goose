@@ -144,7 +144,7 @@ const AdminLayout = () => {
           </IconButton>
 
           <Typography variant="h6" noWrap align="left">
-            <Link to="/followig/projects" className={classes.link}>
+            <Link to="/following/projects" className={classes.link}>
               Projects
             </Link>
             <Link to="/" className={classes.link}>
