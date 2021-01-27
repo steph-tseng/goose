@@ -1,0 +1,4 @@
+/projects              /projects
+/projects/*            /projects/:splat
+/topics                /topics
+/admin/users           /admin/users
