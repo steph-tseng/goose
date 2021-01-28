@@ -66,7 +66,7 @@ const UserListPage = () => {
     dispatch(userActions.unfollow(userId));
   };
 
-  console.log(users);
+  // console.log(users);
   return (
     <Paper
       className={classes.root}

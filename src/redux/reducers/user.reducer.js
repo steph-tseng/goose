@@ -28,7 +28,7 @@ const userReducer = (state = initialState, action) => {
         loading: false,
       };
     case types.GET_FOLLOWING_SUCCESS:
-      console.log("payload", payload);
+      // console.log("payload", payload);
       return {
         ...state,
         following: payload.users,

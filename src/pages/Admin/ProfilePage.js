@@ -42,7 +42,7 @@ const ProfilePage = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
   const history = useHistory();
-  console.log("user", user);
+  // console.log("user", user);
 
   const children = (
     <>

@@ -9,7 +9,7 @@ const getCurrentUserInfo = (authToken) => async (dispatch) => {
   try {
     const res = await api.get(`/users/me`, authToken);
     dispatch({ type: types.GET_CURRENT_USER_SUCCESS, payload: res.data.data });
-    console.log("actions", res.data.data);
+    // console.log("actions", res.data.data);
   } catch (error) {
     dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: null });
   }
@@ -79,7 +79,7 @@ const getListOfFollowing = () => async (dispatch) => {
 
     dispatch({ type: types.GET_FOLLOWING_SUCCESS, payload: res.data.data });
   } catch (error) {
-    console.log("errrr", error);
+    // console.log("errrr", error);
     dispatch({ type: types.GET_FOLLOWING_FAILURE, payload: null });
   }
 };

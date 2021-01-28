@@ -38,7 +38,7 @@ const LoginPage = () => {
   }, [dispatch, history, redirectTo]);
 
   const loginWithFacebook = (response) => {
-    console.log(response);
+    // console.log(response);
     dispatch(authActions.loginFacebook(response.accessToken));
   };
   const loginWithGoogle = (response) => {

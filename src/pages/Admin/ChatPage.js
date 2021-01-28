@@ -113,7 +113,7 @@ const ChatPage = () => {
       socket.on(socketTypes.NOTIFICATION, (data) => {
         if (data.onlineUsers) {
           console.log("data", data);
-          setOnlineUsers(data.onlineUsers + 1);
+          setOnlineUsers(data.onlineUsers);
         }
         if (data.globalMessages) {
           setGlobalMessages(data.globalMessages);
