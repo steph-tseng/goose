@@ -34,7 +34,7 @@ import { useDispatch, useSelector } from "react-redux";
 import authActions from "./redux/actions/auth.actions";
 import NotFoundPage from "./pages/NotFoundPage";
 // import MessengerCustomerChat from "react-messenger-customer-chat";
-import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import { Grid, IconButton, makeStyles, Tooltip } from "@material-ui/core";
 import honk from "../src/images/circle-cropped.png";
 
 library.add(
@@ -92,11 +92,13 @@ const App = () => {
       {isAuthenticated !== null && (
         <>
           {loading ? (
-            <img
-              src="https://i.imgur.com/LyTz4RO.gif"
-              alt="Dancing goose"
-              style={{ height: "100vh", overflow: "hidden" }}
-            />
+            <Grid container justify="center">
+              <img
+                src="https://i.imgur.com/LyTz4RO.gif"
+                alt="Dancing goose"
+                style={{ height: "100vh", width: "100%", objectFit: "cover" }}
+              />
+            </Grid>
           ) : (
             <Router>
               <AlertMsg />
