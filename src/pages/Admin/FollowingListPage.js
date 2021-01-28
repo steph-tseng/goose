@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     borderRadius: "10px",
   },
+  container: {
+    overflowY: "scroll",
+    height: "66vh",
+  },
   listItem: {
     display: "flex",
     marginBottom: theme.spacing(2),
@@ -33,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     // height: "100%",
-    width: "100%",
+    width: "80%",
     overflow: "hidden",
     justifySelf: "flex-end",
     alignSelf: "flex-end",
@@ -59,8 +63,8 @@ const FollowingListPage = () => {
       <Paper className={classes.paper}>
         <h1 className={classes.h1}>List of users you are following</h1>
         <hr />
-        <Grid container>
-          <Grid item xs={12} sm={8} md={8} lg={8} xl={8}>
+        <Grid container classes={{ container: classes.container }}>
+          <Grid item xs={12} sm={8} md={8} lg={9} xl={9}>
             <ul className="">
               {following.length > 0 ? (
                 following.map((user) => (
@@ -87,27 +91,29 @@ const FollowingListPage = () => {
           </Grid>
           <Grid
             item
-            xs={3}
-            sm={5}
+            xs={5}
+            sm={4}
             md={4}
-            lg={4}
-            xl={4}
+            lg={3}
+            xl={3}
             style={{ display: "flex", flexDirection: "column" }}
           >
-            <Link to="/">
-              <img
-                src={textbox}
-                alt="Follow them (or me) dialogue box"
-                className={classes.img}
-              />
-              <Tooltip title="Click me to go into the void (the homepage)">
+            <div style={{ position: "sticky", top: "10vh" }}>
+              <Link to="/">
                 <img
-                  src="https://i.pinimg.com/originals/6f/fd/9d/6ffd9db405573db832e5598ac7a51e66.png"
-                  alt="Follow the geese into the void"
+                  src={textbox}
+                  alt="Follow them (or me) dialogue box"
                   className={classes.img}
                 />
-              </Tooltip>
-            </Link>
+                <Tooltip title="Click me to go into the void (the homepage)">
+                  <img
+                    src="https://i.pinimg.com/originals/6f/fd/9d/6ffd9db405573db832e5598ac7a51e66.png"
+                    alt="Follow the geese into the void"
+                    className={classes.img}
+                  />
+                </Tooltip>
+              </Link>
+            </div>
           </Grid>
         </Grid>
       </Paper>

@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "row",
+    overflowY: "scroll",
+    height: "66vh",
   },
   listItem: {
     display: "flex",
@@ -82,7 +84,7 @@ const UserListPage = () => {
       <Grid container classes={{ container: classes.container }}>
         {/* <div className="glass-effect2"> */}
 
-        <Grid item xs={12} sm={8} md={8} lg={8} xl={8}>
+        <Grid item xs={12} sm={8} md={9} lg={9} xl={9}>
           <ul className="">
             {users?.map((user) => (
               <li key={user._id} className={classes.listItem}>
@@ -122,27 +124,32 @@ const UserListPage = () => {
         <Grid
           item
           xs={3}
-          sm={5}
-          md={4}
-          lg={4}
-          xl={4}
-          justify="flex-end"
-          style={{ display: "flex", flexDirection: "column" }}
+          sm={4}
+          md={3}
+          lg={3}
+          xl={3}
+          // justify="flex-end"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          <Link to="/admin/following">
-            <img
-              src={textbox}
-              alt="Follow them (or me) dialogue box"
-              className={classes.img}
-            />
-            <Tooltip title="I'll show you who you follow">
+          <div style={{ position: "sticky", top: "10vh" }}>
+            <Link to="/admin/following">
               <img
-                src="https://i.pinimg.com/originals/6f/fd/9d/6ffd9db405573db832e5598ac7a51e66.png"
-                alt="Follow the geese into the void"
+                src={textbox}
+                alt="Follow them (or me) dialogue box"
                 className={classes.img}
               />
-            </Tooltip>
-          </Link>
+              <Tooltip title="I'll show you who you follow">
+                <img
+                  src="https://i.pinimg.com/originals/6f/fd/9d/6ffd9db405573db832e5598ac7a51e66.png"
+                  alt="Follow the geese into the void"
+                  className={classes.img}
+                />
+              </Tooltip>
+            </Link>
+          </div>
         </Grid>
       </Grid>
     </Paper>

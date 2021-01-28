@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import AlertMsg from "./components/AlertMsg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import AdminLayout from "./routes/AdminLayout";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicLayout from "./routes/PublicLayout";
@@ -34,8 +34,8 @@ import { useDispatch, useSelector } from "react-redux";
 import authActions from "./redux/actions/auth.actions";
 import NotFoundPage from "./pages/NotFoundPage";
 // import MessengerCustomerChat from "react-messenger-customer-chat";
-import { Grid, IconButton, makeStyles, Tooltip } from "@material-ui/core";
-import honk from "../src/images/circle-cropped.png";
+import { Grid } from "@material-ui/core";
+// import honk from "../src/images/circle-cropped.png";
 
 library.add(
   faUser,
@@ -58,18 +58,8 @@ library.add(
   faHeart
 );
 
-const useStyles = makeStyles((theme) => ({
-  btn: {
-    "& .Mui-selected": {
-      border: "0",
-    },
-  },
-}));
-
 const App = () => {
   const dispatch = useDispatch();
-  // const history = useHistory();
-  // const classes = useStyles();
   const loading = useSelector((state) => state.auth.loading);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [value, setValue] = useState(null);
