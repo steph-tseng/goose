@@ -55,7 +55,7 @@ const PublicNavbar = () => {
       <Nav.Link as={Link} to="/admin/profile">
         <FontAwesomeIcon icon="chart-line" size="sm" /> Profile
       </Nav.Link>
-      <Nav.Link as={Link} onClick={handleLogout}>
+      <Nav.Link as={Link} to="/login" onClick={handleLogout}>
         <FontAwesomeIcon icon="sign-out-alt" size="sm" /> Logout
       </Nav.Link>
     </Nav>

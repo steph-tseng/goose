@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import AlertMsg from "./components/AlertMsg";
@@ -72,6 +72,12 @@ const App = () => {
   // const classes = useStyles();
   const loading = useSelector((state) => state.auth.loading);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [value, setValue] = useState(null);
+
+  useLayoutEffect(() => {
+    if (!value) setValue(0);
+  }, [value]);
+
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken && accessToken !== "undefined") {
@@ -89,7 +95,7 @@ const App = () => {
             <img
               src="https://i.imgur.com/LyTz4RO.gif"
               alt="Dancing goose"
-              style={{ height: "100vh", width: "100vw" }}
+              style={{ height: "100vh", overflow: "hidden" }}
             />
           ) : (
             <Router>

@@ -21,7 +21,7 @@ const topicsRequest = (pagenum, searchBy, query) => async (dispatch) => {
   dispatch({ type: types.CANCEL_SELECTED_TOPIC, payload: null });
   try {
     // TODO
-    console.log("query", searchBy, query);
+    // console.log("query", searchBy, query);
     if (query) {
       const res = await api.get(
         `topics?page=${pagenum}&limit=10&${searchBy}[$regex]=${query}&${searchBy}[$options]=i`

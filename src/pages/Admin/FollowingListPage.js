@@ -92,8 +92,6 @@ const FollowingListPage = () => {
             md={4}
             lg={4}
             xl={4}
-            justify="flex-end"
-            alignContent="flex-end"
             style={{ display: "flex", flexDirection: "column" }}
           >
             <Link to="/">
